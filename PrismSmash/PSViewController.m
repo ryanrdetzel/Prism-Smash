@@ -7,7 +7,13 @@
 //
 
 #import "PSViewController.h"
-#import "PSMyScene.h"
+#import "PSGameScene.h"
+#import "PSGameOverScene.h"
+
+@interface PSViewController()
+@property (nonatomic, strong) PSGameScene *gameScene;
+@property (nonatomic, strong) PSGameOverScene *gameOverScene;
+@end
 
 @implementation PSViewController
 
@@ -15,17 +21,14 @@
 {
     [super viewDidLoad];
 
-    // Configure the view.
     SKView * skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
     
     // Create and configure the scene.
-    SKScene * scene = [PSMyScene sceneWithSize:skView.bounds.size];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
+    self.gameScene = [PSGameScene sceneWithSize:skView.bounds.size];
+    self.gameScene.scaleMode = SKSceneScaleModeAspectFill;
+    self.gameScene.viewController = self;
     
-    // Present the scene.
-    [skView presentScene:scene];
+    [skView presentScene:self.gameScene];
 }
 
 - (BOOL)shouldAutorotate
