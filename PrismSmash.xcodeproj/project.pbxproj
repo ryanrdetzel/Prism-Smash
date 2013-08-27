@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C53E000417CD556B00D6F119 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = C53E000217CD556B00D6F119 /* background.png */; };
+		C53E000517CD556B00D6F119 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C53E000317CD556B00D6F119 /* background@2x.png */; };
 		C53EFFB917CD438900D6F119 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53EFFB817CD438900D6F119 /* Foundation.framework */; };
 		C53EFFBB17CD438900D6F119 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53EFFBA17CD438900D6F119 /* CoreGraphics.framework */; };
 		C53EFFBD17CD438900D6F119 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53EFFBC17CD438900D6F119 /* UIKit.framework */; };
@@ -23,6 +25,7 @@
 		C53EFFEB17CD438A00D6F119 /* PrismSmashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C53EFFEA17CD438A00D6F119 /* PrismSmashTests.m */; };
 		C53EFFF617CD500900D6F119 /* PSGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C53EFFF517CD500900D6F119 /* PSGameScene.m */; };
 		C53EFFF917CD501800D6F119 /* PSGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C53EFFF817CD501800D6F119 /* PSGameOverScene.m */; };
+		C53EFFFD17CD527300D6F119 /* PSGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = C53EFFFC17CD527300D6F119 /* PSGameBoard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C53E000217CD556B00D6F119 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = ../background.png; sourceTree = "<group>"; };
+		C53E000317CD556B00D6F119 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background@2x.png"; path = "../background@2x.png"; sourceTree = "<group>"; };
 		C53EFFB517CD438900D6F119 /* PrismSmash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrismSmash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53EFFB817CD438900D6F119 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C53EFFBA17CD438900D6F119 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,6 +64,8 @@
 		C53EFFF517CD500900D6F119 /* PSGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSGameScene.m; path = Scenes/PSGameScene.m; sourceTree = "<group>"; };
 		C53EFFF717CD501800D6F119 /* PSGameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSGameOverScene.h; path = Scenes/PSGameOverScene.h; sourceTree = "<group>"; };
 		C53EFFF817CD501800D6F119 /* PSGameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSGameOverScene.m; path = Scenes/PSGameOverScene.m; sourceTree = "<group>"; };
+		C53EFFFB17CD527300D6F119 /* PSGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSGameBoard.h; sourceTree = "<group>"; };
+		C53EFFFC17CD527300D6F119 /* PSGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSGameBoard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +93,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C53E000617CD557100D6F119 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C53E000717CD557900D6F119 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C53E000717CD557900D6F119 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C53E000217CD556B00D6F119 /* background.png */,
+				C53E000317CD556B00D6F119 /* background@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		C53EFFAC17CD438900D6F119 = {
 			isa = PBXGroup;
 			children = (
@@ -124,8 +148,11 @@
 				C53EFFCA17CD438900D6F119 /* PSAppDelegate.m */,
 				C53EFFCF17CD438900D6F119 /* PSViewController.h */,
 				C53EFFD017CD438900D6F119 /* PSViewController.m */,
+				C53EFFFB17CD527300D6F119 /* PSGameBoard.h */,
+				C53EFFFC17CD527300D6F119 /* PSGameBoard.m */,
 				C53EFFFA17CD519600D6F119 /* Scenes */,
 				C53EFFD717CD438900D6F119 /* Images.xcassets */,
+				C53E000617CD557100D6F119 /* Resources */,
 				C53EFFC117CD438900D6F119 /* Supporting Files */,
 			);
 			path = PrismSmash;
@@ -249,6 +276,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C53EFFC517CD438900D6F119 /* InfoPlist.strings in Resources */,
+				C53E000417CD556B00D6F119 /* background.png in Resources */,
+				C53E000517CD556B00D6F119 /* background@2x.png in Resources */,
 				C53EFFD817CD438900D6F119 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +300,7 @@
 				C53EFFF917CD501800D6F119 /* PSGameOverScene.m in Sources */,
 				C53EFFC717CD438900D6F119 /* main.m in Sources */,
 				C53EFFD117CD438900D6F119 /* PSViewController.m in Sources */,
+				C53EFFFD17CD527300D6F119 /* PSGameBoard.m in Sources */,
 				C53EFFCB17CD438900D6F119 /* PSAppDelegate.m in Sources */,
 				C53EFFF617CD500900D6F119 /* PSGameScene.m in Sources */,
 			);
