@@ -19,6 +19,8 @@
 @property (nonatomic, strong) PSBlock *selectedBlock;
 @property (nonatomic) BOOL swapAllowed;
 
+@property (nonatomic) NSInteger sequenceRun;
+
 @end
 
 @implementation PSGameBoard
@@ -29,6 +31,7 @@
     self.gameScene = (PSGameScene *)self.scene;
     self.gameIsActive = NO;
     self.swapAllowed = YES;
+    self.sequenceRun = 0;
     
     self.userInteractionEnabled = YES;
     
@@ -49,7 +52,12 @@
             [self addBlockWithColor:[colors objectAtIndex:arc4random() % [colors count]] row:row col:col];
         }
     }
+    
+    self.gameIsActive = YES;
 
+    // In a properly designed level we shouldn't need this check.
+    [self findSequences];
+    
     return NO;
 }
 
@@ -90,18 +98,6 @@
     PSBlock *block = (PSBlock *)[self childNodeWithName:name];
     return block;
 }
-
-/*
- Alternative blockAtRow method
--(PSBlock *)blockAtRow:(int)row col:(int)col{
-    for (PSBlock *block in self.blocks){
-        if (block.row == row && block.col == col){
-            return block;
-        }
-    }
-    return nil;
-}
-*/
 
 -(void)addReplacmentBlocks:(NSArray *)blocks{
     /* For each block that's passed in replace it with a new block and add it to the top of the stack */
@@ -166,6 +162,12 @@
             block.moveDownBy = 0; //Make sure we reset this
         }
     }
+    
+    /* Wait for all the blocks to fall into place and check for combos again */
+    SKAction *doneAction = [SKAction waitForDuration:kFallDuration + 0.1];
+    [self runAction:doneAction completion:^(){
+        [self findSequences];
+    }];
 }
 
 -(BOOL)swapBlock:(PSBlock *)block1 withBlock:(PSBlock *)block2 isReversing:(BOOL)reversing{
@@ -199,10 +201,11 @@
             // If we're reversing a swap don't bother checking for a match. If we didn't have this
             // The blocks would just continue to swap back and forth.
             if (reversing == NO){
-                //Check for a match after they have completed their animation
-                if ([block1.colorName isEqualToString:block2.colorName]){
-                    [self removeBlocks:@[block1, block2]];
+                if ([self findSequences]){
+                    //A swap was successull; it resulted in matche(s)
+                    // Score? Subtract from moves?
                 }else{
+                    // No matches so swap the blocks back
                     [self swapBlock:block2 withBlock:block1 isReversing:YES];
                 }
             }
@@ -211,6 +214,83 @@
         return YES;
     }
     return NO;
+}
+
+-(BOOL)findSequences{
+    /*
+     Check for blocks that make a sequence, 3, 4 or 5 same colors in a row and returns
+     YES if any blocks matched and were removed.
+     */
+    
+    if (!self.gameIsActive) return NO;
+    
+    NSMutableArray *currentRun = [[NSMutableArray alloc] init];
+    NSMutableSet *blocksToRemove = [[NSMutableSet alloc] init];
+    
+    NSMutableSet *partOfHorizonalSequence = [[NSMutableSet alloc] init];
+    NSMutableSet *partOfVerticalSequence = [[NSMutableSet alloc] init];
+    
+    for (PSBlock *block in [self.blocks sortedArrayUsingSelector:@selector(compare:)]){
+        NSInteger row = block.row;
+        NSInteger col = block.col;
+        
+        if ([partOfHorizonalSequence containsObject:block] == NO){
+            
+            NSInteger currentColumn = col + 1;
+            
+            [currentRun removeAllObjects];
+            [currentRun addObject:block];
+            
+            while (currentColumn < kNumberOfCols){
+                PSBlock *nextBlock = [self blockAtRow:row col:currentColumn];
+                if ([block doesMatchBlock:nextBlock]){
+                    [currentRun addObject:nextBlock];
+                }else{
+                    break;
+                }
+                currentColumn++;
+            }
+            
+            if ([currentRun count] >= 3){
+                [partOfHorizonalSequence addObjectsFromArray:currentRun];
+                [blocksToRemove addObjectsFromArray:currentRun];
+            }
+        }
+        
+        if ([partOfVerticalSequence containsObject:block] == NO){
+            
+            /* Now check the column */
+            NSInteger currentRow = row + 1; //start checking with the next row
+            
+            [currentRun removeAllObjects];
+            [currentRun addObject:block];
+            
+            while (currentRow < kNumberOfRows){
+                PSBlock *_block = [self blockAtRow:currentRow col:col];
+                if ([block doesMatchBlock:_block]){
+                    [currentRun addObject:_block];
+                }else{
+                    break;
+                }
+                currentRow++;
+            }
+            
+            if ([currentRun count] >= 3){
+                [partOfVerticalSequence addObjectsFromArray:currentRun];
+                [blocksToRemove addObjectsFromArray:currentRun];
+            }
+        }
+    }
+    
+    if ([blocksToRemove count] == 0){
+        /* Turn user interaction back on */
+        self.swapAllowed = YES;
+        self.sequenceRun = 0;
+    }else{
+        [self removeBlocks:[blocksToRemove allObjects]];
+        self.swapAllowed = NO;
+    }
+    return [blocksToRemove count];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

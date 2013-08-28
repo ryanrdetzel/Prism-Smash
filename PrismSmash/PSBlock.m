@@ -59,6 +59,10 @@
     return NO;
 }
 
+-(BOOL)doesMatchBlock:(PSBlock *)block{
+    return [self.colorName isEqualToString:block.colorName];
+}
+
 -(void)updateRow:(int)row col:(int)col{
     self.row = row;
     self.col = col;
@@ -67,6 +71,7 @@
 
 -(void)remove{
     self.removing = YES;
+    self.name = @"removing";
     
     SKAction *shrink = [SKAction fadeAlphaTo:0 duration:0.4];
     [self runAction:shrink completion:^(){
