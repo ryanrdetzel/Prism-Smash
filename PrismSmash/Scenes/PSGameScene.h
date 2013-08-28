@@ -14,5 +14,6 @@
 @property (nonatomic, strong) PSViewController *viewController;
 
 -(void)loadLevel:(NSDictionary *)levelData;
+-(void)updateMovesLeft:(NSInteger)movesLeft;
 
 @end

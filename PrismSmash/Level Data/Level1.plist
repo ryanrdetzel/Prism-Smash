@@ -90,5 +90,7 @@
 		<string>red</string>
 		<string>blue</string>
 	</array>
+	<key>movesAllowed</key>
+	<integer>20</integer>
 </dict>
 </plist>

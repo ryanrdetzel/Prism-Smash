@@ -17,5 +17,12 @@ extern NSInteger const kStartY;
 extern NSInteger const kNumberOfRows;
 extern NSInteger const kNumberOfCols;
 
+extern float const kGameBoardWidth;
+extern float const kGameBoardHeight;
+
 extern float const kBlockSwapDuration;
 extern float const kFallDuration;
+extern float const kEarnedStarAlpha;
+
+extern NSString * const kFont1;
+extern NSString * const kFont2;

@@ -29,7 +29,6 @@
     self.gameScene.scaleMode = SKSceneScaleModeAspectFill;
     self.gameScene.viewController = self;
     
-    NSLog(@"Level Data: %@", self.levelData);
     //Lets load our first level into the scene/board
     [self.gameScene loadLevel:[self.levelData objectAtIndex:0]];
     

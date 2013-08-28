@@ -69,7 +69,6 @@
         NSString *colorName = [blocks objectAtIndex:blockNumber];
         
         PSBlock *block = [self addBlockWithColor:colorName row:row col:col];
-        NSLog(@"Block: %@", block);
     }
     self.gameIsActive = YES;
 
