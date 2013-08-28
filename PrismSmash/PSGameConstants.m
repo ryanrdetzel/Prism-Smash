@@ -17,3 +17,5 @@ NSInteger const kStartY = 0;
 
 NSInteger const kNumberOfRows = 9;
 NSInteger const kNumberOfCols = 9;
+
+float const kBlockSwapDuration = 0.15;

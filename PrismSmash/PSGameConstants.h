@@ -16,3 +16,5 @@ extern NSInteger const kStartY;
 
 extern NSInteger const kNumberOfRows;
 extern NSInteger const kNumberOfCols;
+
+extern float const kBlockSwapDuration;

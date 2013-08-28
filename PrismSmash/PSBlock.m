@@ -33,6 +33,29 @@
     return self;
 }
 
+-(BOOL)isAdjacentToBlock:(PSBlock *)block{
+    /* Returns YES if the block is adjacent to the block passed in. */
+    if (self == block) return NO;
+    
+    NSInteger row1 = self.row;
+    NSInteger col1 = self.col;
+    
+    NSInteger row2 = block.row;
+    NSInteger col2 = block.col;
+    
+    if (row1 == row2){
+        if (col2+1 == col1 || col2-1 == col1){
+            return YES;
+        }
+    }
+    if (col1 == col2){
+        if (row2 + 1 == row1 || row2 - 1 == row1){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 -(void)updateRow:(int)row col:(int)col{
     self.row = row;
     self.col = col;

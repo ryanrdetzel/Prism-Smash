@@ -19,5 +19,6 @@
 
 -(void)updateRow:(int)row col:(int)col;
 -(void)remove;
+-(BOOL)isAdjacentToBlock:(PSBlock *)block;
 
 @end
