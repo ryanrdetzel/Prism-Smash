@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) PSViewController *viewController;
 
+-(void)loadLevel:(NSDictionary *)levelData;
+
 @end

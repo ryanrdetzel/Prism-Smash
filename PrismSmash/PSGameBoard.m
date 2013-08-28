@@ -43,22 +43,40 @@
     return _blocks;
 }
 
+-(void)clearLevel{
+    /* Removes all blocks from the level and reset everything back to it's initial state*/
+    
+    [self removeAllChildren];
+    [self.blocks removeAllObjects];
+    
+    self.gameIsActive = NO;
+    self.swapAllowed = NO;
+}
+
+
 -(BOOL)loadLevel:(NSDictionary *)levelData{
     /* Loads the level data into the gameboard */
     
-    for (NSInteger col=0;col<kNumberOfCols;col++){
-        for (NSInteger row=0;row<kNumberOfRows;row++){
-            NSArray *colors = @[@"red", @"blue", @"purple", @"yellow", @"orange", @"green"];
-            [self addBlockWithColor:[colors objectAtIndex:arc4random() % [colors count]] row:row col:col];
-        }
-    }
+    [self clearLevel];
     
+    NSArray *blocks = [levelData objectForKey:@"blocks"];
+    
+    for (NSInteger blockNumber=0;blockNumber<[blocks count];blockNumber++){
+        // Since the blocks is just an array we need to calculate the row/col
+        NSInteger row = blockNumber / kNumberOfRows;
+        NSInteger col = blockNumber % kNumberOfRows;
+        
+        NSString *colorName = [blocks objectAtIndex:blockNumber];
+        
+        PSBlock *block = [self addBlockWithColor:colorName row:row col:col];
+        NSLog(@"Block: %@", block);
+    }
     self.gameIsActive = YES;
 
     // In a properly designed level we shouldn't need this check.
     [self findSequences];
     
-    return NO;
+    return [self.blocks count];
 }
 
 -(PSBlock *)addBlockWithColor:(NSString *)colorName row:(int)row col:(int)col{
