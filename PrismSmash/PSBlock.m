@@ -27,6 +27,7 @@
     self.colorName = color;
     self.gameBoard = gameBoard;
     self.removing = NO;
+    self.moveDownBy = 0;
     
     self.texture = [SKTexture textureWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-block.png", color]]];
     
@@ -71,6 +72,20 @@
     [self runAction:shrink completion:^(){
         [self removeFromParent];
     }];
+}
+
+-(NSComparisonResult)compare:(PSBlock *)block1{
+    
+    NSInteger num1 = (block1.row * 10) + block1.col;
+    NSInteger num2 = (self.row * 10) + self.col;
+    
+    if (num1 > num2){
+        return NSOrderedAscending;
+    }
+    else if (num2 > num1){
+        return NSOrderedDescending;
+    }
+    return NSOrderedSame;
 }
 
 -(NSString *)description{

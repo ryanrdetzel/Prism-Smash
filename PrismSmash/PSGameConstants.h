@@ -18,3 +18,4 @@ extern NSInteger const kNumberOfRows;
 extern NSInteger const kNumberOfCols;
 
 extern float const kBlockSwapDuration;
+extern float const kFallDuration;

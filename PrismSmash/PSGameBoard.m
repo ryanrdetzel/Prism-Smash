@@ -35,6 +35,11 @@
     return self;
 }
 
+-(NSMutableArray *)blocks{
+    if (!_blocks) _blocks = [[NSMutableArray alloc] init];
+    return _blocks;
+}
+
 -(BOOL)loadLevel:(NSDictionary *)levelData{
     /* Loads the level data into the gameboard */
     
@@ -57,6 +62,29 @@
     return block;
 }
 
+-(NSArray *)blocksAboveBlock:(PSBlock *)block{
+    /*
+     When we remove a block we need all of the blocks above the block being removed
+     so we have this helper function to get all of those blocks for us
+     */
+    NSMutableArray *blocks = [[NSMutableArray alloc] init];
+    
+    for (PSBlock *_block in self.blocks){
+        if (block.col == _block.col){
+            if (_block.row > block.row){
+                [blocks addObject:_block];
+            }
+        }
+    }
+    return blocks;
+}
+
+-(int)calcRow:(PSBlock *)block{
+    /* Calculate the blocks new row based off it's current position */
+    NSInteger blockY = block.position.y - kStartY;
+    return blockY / kBlockHeight;
+}
+
 -(BOOL)removeBlock:(PSBlock *)block{
     /* Called for each block that is removed from the game */
     
@@ -68,12 +96,38 @@
     
     [self.blocks removeObject:block];
     
-//    //Each block above this block needs to move down to fill the gap
-//    for (PSBlock *_block in [self blocksAboveBlock:block]){
-//        _block.moveDownBy += kBlockHeight;
-//    }
+    //Each block above this block needs to move down to fill the gap
+    for (PSBlock *_block in [self blocksAboveBlock:block]){
+        _block.moveDownBy += kBlockHeight;
+    }
     
     return YES;
+}
+
+-(void)removeBlocks:(NSArray *)blocks{
+    /* Mass remove blocks. This is called after a findSequences call */
+    
+    if (blocks == nil || [blocks count] == 0) return;
+    
+    NSArray *sortedBlocks = [blocks sortedArrayUsingSelector:@selector(compare:)];
+    
+    for (PSBlock *block in sortedBlocks){
+        [self removeBlock:block];
+    }
+    
+    for (PSBlock *block in [self.blocks sortedArrayUsingSelector:@selector(compare:)]){
+        if (block.moveDownBy > 0){
+            SKAction *moveDown = [SKAction moveByX:0.0 y:-block.moveDownBy
+                                          duration:kFallDuration];
+            
+            [block runAction:moveDown completion:^(){
+                NSInteger new_row = [self calcRow:block];
+                [block updateRow:new_row col:block.col];
+            }];
+            
+            block.moveDownBy = 0; //Make sure we reset this
+        }
+    }
 }
 
 -(BOOL)swapBlock:(PSBlock *)block1 withBlock:(PSBlock *)block2 isReversing:(BOOL)reversing{
@@ -109,7 +163,7 @@
             if (reversing == NO){
                 //Check for a match after they have completed their animation
                 if ([block1.colorName isEqualToString:block2.colorName]){
-                    [self removeBlock:block1];
+                    [self removeBlocks:@[block1, block2]];
                 }else{
                     [self swapBlock:block2 withBlock:block1 isReversing:YES];
                 }
