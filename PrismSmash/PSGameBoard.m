@@ -85,6 +85,42 @@
     return blockY / kBlockHeight;
 }
 
+-(PSBlock *)blockAtRow:(int)row col:(int)col{
+    NSString *name = [NSString stringWithFormat:@"%dx%d", row, col];
+    PSBlock *block = (PSBlock *)[self childNodeWithName:name];
+    return block;
+}
+
+/*
+ Alternative blockAtRow method
+-(PSBlock *)blockAtRow:(int)row col:(int)col{
+    for (PSBlock *block in self.blocks){
+        if (block.row == row && block.col == col){
+            return block;
+        }
+    }
+    return nil;
+}
+*/
+
+-(void)addReplacmentBlocks:(NSArray *)blocks{
+    /* For each block that's passed in replace it with a new block and add it to the top of the stack */
+    
+    for (PSBlock *block in blocks){
+        NSInteger row = 0;
+        NSInteger col = block.col;
+        
+        /* Since multiple blocks can be removed we have to find the first empty spot for this block. Start
+         at the bottom and keep checking up until we find a spot for it */
+        while ([self blockAtRow:row col:col]){
+            row++;
+        }
+        
+        NSArray *colors = @[@"red", @"blue", @"purple", @"yellow", @"orange", @"green"];
+        [self addBlockWithColor:[colors objectAtIndex:arc4random() % [colors count]] row:row col:col];
+    }
+}
+
 -(BOOL)removeBlock:(PSBlock *)block{
     /* Called for each block that is removed from the game */
     
@@ -108,6 +144,8 @@
     /* Mass remove blocks. This is called after a findSequences call */
     
     if (blocks == nil || [blocks count] == 0) return;
+    
+    [self addReplacmentBlocks:blocks];
     
     NSArray *sortedBlocks = [blocks sortedArrayUsingSelector:@selector(compare:)];
     
