@@ -14,6 +14,7 @@
 @property (nonatomic, readonly) NSInteger row;
 @property (nonatomic, readonly) NSInteger col;
 @property (nonatomic, strong) NSString *colorName;
+@property (nonatomic, readonly, getter=isBeingRemoved) BOOL removing;
 
 -(id)initWithGameBoard:(PSGameBoard *)gameBoard row:(int)row col:(int)col color:(NSString *)color;
 

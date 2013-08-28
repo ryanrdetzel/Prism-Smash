@@ -57,6 +57,24 @@
     return block;
 }
 
+-(BOOL)removeBlock:(PSBlock *)block{
+    /* Called for each block that is removed from the game */
+    
+    if (block.isBeingRemoved){
+        return NO;
+    }
+    
+    [block remove];
+    
+    [self.blocks removeObject:block];
+    
+//    //Each block above this block needs to move down to fill the gap
+//    for (PSBlock *_block in [self blocksAboveBlock:block]){
+//        _block.moveDownBy += kBlockHeight;
+//    }
+    
+    return YES;
+}
 
 -(BOOL)swapBlock:(PSBlock *)block1 withBlock:(PSBlock *)block2 isReversing:(BOOL)reversing{
     
@@ -86,10 +104,15 @@
         SKAction *doneAction = [SKAction waitForDuration:kBlockSwapDuration + 0.1];
         [self runAction:doneAction completion:^(){
             self.swapAllowed = YES;
-            // If we're reversing a swap don't bother checking for a match
+            // If we're reversing a swap don't bother checking for a match. If we didn't have this
+            // The blocks would just continue to swap back and forth.
             if (reversing == NO){
                 //Check for a match after they have completed their animation
-                [self swapBlock:block2 withBlock:block1 isReversing:YES];
+                if ([block1.colorName isEqualToString:block2.colorName]){
+                    [self removeBlock:block1];
+                }else{
+                    [self swapBlock:block2 withBlock:block1 isReversing:YES];
+                }
             }
         }];
         

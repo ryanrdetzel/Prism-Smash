@@ -13,6 +13,7 @@
 @property (nonatomic, strong) PSGameBoard *gameBoard;
 @property (nonatomic, readwrite) NSInteger row;
 @property (nonatomic, readwrite) NSInteger col;
+@property (nonatomic, readwrite) BOOL removing;
 @end
 
 @implementation PSBlock
@@ -25,6 +26,7 @@
     
     self.colorName = color;
     self.gameBoard = gameBoard;
+    self.removing = NO;
     
     self.texture = [SKTexture textureWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-block.png", color]]];
     
@@ -63,7 +65,12 @@
 }
 
 -(void)remove{
-    // Add some animation or something when the block is removed.
+    self.removing = YES;
+    
+    SKAction *shrink = [SKAction fadeAlphaTo:0 duration:0.4];
+    [self runAction:shrink completion:^(){
+        [self removeFromParent];
+    }];
 }
 
 -(NSString *)description{
