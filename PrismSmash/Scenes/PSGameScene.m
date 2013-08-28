@@ -26,6 +26,13 @@
         self.gameBoard = [[PSGameBoard alloc] init];
         
         [self addChild:self.gameBoard];
+        
+        [self.gameBoard loadLevel:@{}];
+        
+        //We need to add the blocks first so we get an accurate size of the gameboard
+        self.gameBoard.position = CGPointMake(
+                                              (self.calculateAccumulatedFrame.size.width -self.gameBoard.calculateAccumulatedFrame.size.width) / 2,
+                                              (self.calculateAccumulatedFrame.size.height -self.gameBoard.calculateAccumulatedFrame.size.height) / 2);
     }
     return self;
 }
