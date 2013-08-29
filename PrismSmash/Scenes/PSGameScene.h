@@ -15,6 +15,6 @@
 
 -(void)loadLevel:(NSDictionary *)levelData;
 -(void)updateMovesLeft:(NSInteger)movesLeft;
--(void)updateScore:(NSInteger)newScore;
+-(void)updateScore:(NSInteger)newScore percentComplete:(NSInteger)percent;
 
 @end

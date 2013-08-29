@@ -154,8 +154,6 @@
     [self addChild:progressBackground];
     // The progressbar is 280p wide so to make it at position zero we start -280
     self.progressBar.position = CGPointMake(-280, self.progressBar.position.y);
-    
-    [self updateProgressBar:5];
 }
 
 -(void)updateTargetStar1:(float)target1 star2:(float)target2 star3:(float)target3{
@@ -180,8 +178,9 @@
     }
 }
 
--(void)updateScore:(NSInteger)newScore{
+-(void)updateScore:(NSInteger)newScore percentComplete:(NSInteger)percent{
     self.scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
+    [self updateProgressBar:percent];
 }
 
 -(void)updateMovesLeft:(NSInteger)movesLeft{

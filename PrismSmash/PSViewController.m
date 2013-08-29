@@ -30,7 +30,7 @@
     self.gameScene.viewController = self;
     
     //Lets load our first level into the scene/board
-    [self.gameScene loadLevel:[self.levelData objectAtIndex:0]];
+    [self.gameScene loadLevel:[self.levelData objectAtIndex:1]];
     
     [skView presentScene:self.gameScene];
 }

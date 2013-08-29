@@ -25,6 +25,10 @@
 @property (nonatomic) NSInteger movesPerformed;
 @property (nonatomic) NSInteger movesAllowed;
 
+@property (nonatomic) NSInteger targetScore1;
+@property (nonatomic) NSInteger targetScore2;
+@property (nonatomic) NSInteger targetScore3;
+
 @end
 
 @implementation PSGameBoard
@@ -55,7 +59,8 @@
 
 -(void)setScore:(NSInteger)newScore{
     _score = newScore;
-    [self.gameScene updateScore:newScore];
+    float percent = (((float)newScore / self.targetScore3) * 100);
+    [self.gameScene updateScore:newScore percentComplete:percent];
 }
 
 -(NSMutableArray *)blocks{
@@ -84,6 +89,10 @@
     [self clearLevel];
     
     self.movesAllowed = [[levelData objectForKey:@"movesAllowed"] integerValue];
+    self.targetScore1 = [[levelData objectForKey:@"targetScore1"] integerValue];
+    self.targetScore2 = [[levelData objectForKey:@"targetScore2"] integerValue];
+    self.targetScore3 = [[levelData objectForKey:@"targetScore3"] integerValue];
+
     self.movesPerformed = 0;
 
     NSArray *blocks = [levelData objectForKey:@"blocks"];
