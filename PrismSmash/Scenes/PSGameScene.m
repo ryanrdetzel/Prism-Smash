@@ -174,12 +174,18 @@
     float xValue = -280 + (percent / 100 * 280);
     
     if (self.progressBar.position.x < xValue){
-        self.progressBar.position = CGPointMake(xValue, self.progressBar.position.y);
+        SKAction *move = [SKAction moveToX:xValue duration:1.0];
+        [self.progressBar runAction:move];
     }
 }
 
 -(void)updateScore:(NSInteger)newScore percentComplete:(NSInteger)percent{
-    self.scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithInteger:newScore]];
+    
+    self.scoreLabel.text = formatted;
+
     [self updateProgressBar:percent];
 }
 
