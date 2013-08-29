@@ -180,6 +180,10 @@
     }
 }
 
+-(void)updateScore:(NSInteger)newScore{
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
+}
+
 -(void)updateMovesLeft:(NSInteger)movesLeft{
     self.movesLeftLabel.text = [NSString stringWithFormat:@"%d", movesLeft];
 }
@@ -195,12 +199,13 @@
 }
 
 -(void)loadLevel:(NSDictionary *)levelData{
+    [self resetScene];
+
     /* Setup the scene and load the leve into the gameboard */
     if ([self.gameBoard loadLevel:levelData]){
-        [self resetScene];
         
         self.levelLabel.text = [levelData objectForKey:@"name"];
-        [self updateMovesLeft:[[levelData objectForKey:@"movesAllowed"] integerValue]];
+        //[self updateMovesLeft:[[levelData objectForKey:@"movesAllowed"] integerValue]];
         
         [self updateTargetStar1:[[levelData objectForKey:@"targetScore1"] floatValue]
                           star2:[[levelData objectForKey:@"targetScore2"] floatValue]

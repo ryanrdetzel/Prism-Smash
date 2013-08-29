@@ -20,6 +20,10 @@
 @property (nonatomic) BOOL swapAllowed;
 
 @property (nonatomic) NSInteger sequenceRun;
+@property (nonatomic) NSInteger score;
+
+@property (nonatomic) NSInteger movesPerformed;
+@property (nonatomic) NSInteger movesAllowed;
 
 @end
 
@@ -31,6 +35,9 @@
     self.gameIsActive = NO;
     self.swapAllowed = YES;
     self.sequenceRun = 0;
+    self.score = 0;
+    self.movesAllowed = 0;
+    self.movesPerformed = 0;
     
     self.userInteractionEnabled = YES;
     
@@ -39,6 +46,16 @@
 
 -(PSGameScene *)gameScene{
     return (PSGameScene *)self.scene;
+}
+
+-(void)setMovesPerformed:(NSInteger)movesPerformed{
+    _movesPerformed = movesPerformed;
+    [self.gameScene updateMovesLeft:self.movesAllowed - _movesPerformed];
+}
+
+-(void)setScore:(NSInteger)newScore{
+    _score = newScore;
+    [self.gameScene updateScore:newScore];
 }
 
 -(NSMutableArray *)blocks{
@@ -54,6 +71,10 @@
     
     self.gameIsActive = NO;
     self.swapAllowed = NO;
+    self.sequenceRun = 0;
+    self.score = 0;
+    self.movesAllowed = 0;
+    self.movesPerformed = 0;
 }
 
 
@@ -62,6 +83,9 @@
     
     [self clearLevel];
     
+    self.movesAllowed = [[levelData objectForKey:@"movesAllowed"] integerValue];
+    self.movesPerformed = 0;
+
     NSArray *blocks = [levelData objectForKey:@"blocks"];
     
     for (NSInteger blockNumber=0;blockNumber<[blocks count];blockNumber++){
@@ -224,6 +248,7 @@
                 if ([self findSequences]){
                     //A swap was successull; it resulted in matche(s)
                     // Score? Subtract from moves?
+                    self.movesPerformed++;
                 }else{
                     // No matches so swap the blocks back
                     [self swapBlock:block2 withBlock:block1 isReversing:YES];
@@ -274,6 +299,8 @@
             if ([currentRun count] >= 3){
                 [partOfHorizonalSequence addObjectsFromArray:currentRun];
                 [blocksToRemove addObjectsFromArray:currentRun];
+                [self scoreRun:currentRun];
+                self.sequenceRun++;
             }
         }
         
@@ -298,6 +325,8 @@
             if ([currentRun count] >= 3){
                 [partOfVerticalSequence addObjectsFromArray:currentRun];
                 [blocksToRemove addObjectsFromArray:currentRun];
+                [self scoreRun:currentRun];
+                self.sequenceRun++;
             }
         }
     }
@@ -311,6 +340,77 @@
         self.swapAllowed = NO;
     }
     return [blocksToRemove count];
+}
+
+-(CGPoint)findCenterPoint:(NSArray *)blocks{
+    /* Assuming they're in a line get the average position which is the center */
+    NSInteger x = 0, y = 0;
+    for (PSBlock *block in blocks){
+        x += block.position.x;
+        y += block.position.y;
+    }
+    
+    return CGPointMake(x / [blocks count], y / [blocks count]);
+}
+
+-(void)scoreRun:(NSMutableArray *)currentRunBlocks{
+    /* Based off the run calculate the score */
+    
+    NSInteger multiplier = 1;
+    NSInteger pointsScoredFromRun = 0;
+    
+    if ([currentRunBlocks count] == 4){
+        multiplier = kRunFourMultiplier;
+    }else if ([currentRunBlocks count] == 5){
+        multiplier = kRunFiveMultiplier;
+    }
+    
+    for (PSBlock *block in currentRunBlocks){
+        pointsScoredFromRun += block.pointsEarned;
+    }
+    
+    pointsScoredFromRun *= (multiplier + self.sequenceRun);
+    self.score += pointsScoredFromRun;
+    
+    [self displayPoints:pointsScoredFromRun at:[self findCenterPoint:currentRunBlocks]];
+    
+    self.sequenceRun++;
+}
+
+-(void)displayPoints:(NSInteger)value at:(CGPoint)position{
+    /*
+     When points are awarded we need to display them to the users so they can see that
+     */
+    
+    SKLabelNode *points = [[SKLabelNode alloc] initWithFontNamed:kFont1];
+    
+    // Format them correctly with a comma for thousands
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithInteger:value]];
+    
+    points.text = formatted;
+    points.fontSize = 24;
+    points.zPosition = 3; // show them on top of all other layers
+    points.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    points.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    points.fontColor = [SKColor whiteColor];
+    
+    // We want the points on the scene not on the board so we have to convert the point
+    [self.scene addChild:points];
+    CGPoint p = [self convertPoint:position toNode:points.parent];
+    
+    points.position = p;
+    
+    SKAction *moveUp = [SKAction moveByX:0 y:30 duration:kPointsDisplayDuration];
+    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:kPointsDisplayDuration];
+    SKAction *enlarge = [SKAction scaleBy:1.5 duration:kPointsDisplayDuration];
+    
+    SKAction *sq = [SKAction group:@[moveUp, fadeOut, enlarge]];
+    
+    [points runAction:sq completion:^(){
+        [points removeFromParent];
+    }];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

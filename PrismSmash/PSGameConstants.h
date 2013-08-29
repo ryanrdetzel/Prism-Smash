@@ -17,8 +17,12 @@ extern NSInteger const kStartY;
 extern NSInteger const kNumberOfRows;
 extern NSInteger const kNumberOfCols;
 
+extern NSInteger const kRunFourMultiplier;
+extern NSInteger const kRunFiveMultiplier;
+
 extern float const kGameBoardWidth;
 extern float const kGameBoardHeight;
+extern float const kPointsDisplayDuration;
 
 extern float const kBlockSwapDuration;
 extern float const kFallDuration;

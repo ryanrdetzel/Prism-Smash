@@ -14,6 +14,7 @@
 @property (nonatomic, readwrite) NSInteger row;
 @property (nonatomic, readwrite) NSInteger col;
 @property (nonatomic, readwrite) BOOL removing;
+@property (nonatomic, readwrite) NSInteger pointsEarned;
 @end
 
 @implementation PSBlock
@@ -28,6 +29,7 @@
     self.gameBoard = gameBoard;
     self.removing = NO;
     self.moveDownBy = 0;
+    self.pointsEarned = 50;
     
     self.texture = [SKTexture textureWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-block.png", color]]];
     
