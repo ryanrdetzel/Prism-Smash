@@ -92,5 +92,11 @@
 	</array>
 	<key>movesAllowed</key>
 	<integer>20</integer>
+	<key>targetScore1</key>
+	<string>2500</string>
+	<key>targetScore2</key>
+	<string>7500</string>
+	<key>targetScore3</key>
+	<string>10000</string>
 </dict>
 </plist>

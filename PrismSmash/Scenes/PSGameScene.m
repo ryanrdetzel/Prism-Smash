@@ -21,6 +21,12 @@
 @property (nonatomic, strong) SKSpriteNode *earnedStar2;
 @property (nonatomic, strong) SKSpriteNode *earnedStar3;
 
+@property (nonatomic, strong) SKSpriteNode *progressBar;
+
+@property (nonatomic, strong) SKSpriteNode *targetStar1;
+@property (nonatomic, strong) SKSpriteNode *targetStar2;
+@property (nonatomic, strong) SKSpriteNode *targetStar3;
+
 @end
 
 @implementation PSGameScene
@@ -121,6 +127,57 @@
     [self addChild:self.earnedStar1];
     [self addChild:self.earnedStar2];
     [self addChild:self.earnedStar3];
+    
+    /* Setup progress bar with stars */
+    
+    SKSpriteNode *progressBackground = [SKSpriteNode spriteNodeWithImageNamed:@"progress-bar-background"];
+    progressBackground.position = CGPointMake(160, 65);
+    
+    SKCropNode *cropNode = [[SKCropNode alloc] init];
+    cropNode.maskNode = [[SKSpriteNode alloc] initWithImageNamed:@"progress-bar-mask"];
+    
+    self.progressBar = [SKSpriteNode spriteNodeWithImageNamed:@"progress-bar-middle"];
+    [cropNode addChild:self.progressBar];
+    
+    [progressBackground addChild:cropNode];
+    
+    self.targetStar1 = [SKSpriteNode spriteNodeWithTexture:starTexture size:CGSizeMake(17, 17)];
+    self.targetStar2 = [SKSpriteNode spriteNodeWithTexture:starTexture size:CGSizeMake(17, 17)];
+    self.targetStar3 = [SKSpriteNode spriteNodeWithTexture:starTexture size:CGSizeMake(17, 17)];
+    
+    [progressBackground addChild:self.targetStar1];
+    [progressBackground addChild:self.targetStar2];
+    [progressBackground addChild:self.targetStar3];
+    
+    self.targetStar1.alpha = self.targetStar2.alpha = self.targetStar3.alpha = 0;
+    
+    [self addChild:progressBackground];
+    // The progressbar is 280p wide so to make it at position zero we start -280
+    self.progressBar.position = CGPointMake(-280, self.progressBar.position.y);
+    
+    [self updateProgressBar:5];
+}
+
+-(void)updateTargetStar1:(float)target1 star2:(float)target2 star3:(float)target3{
+    /* Based on the target scores update the target stars */
+    
+    // Not the order of operations makes the 140 subtract after the multiplication.
+    self.targetStar1.position = CGPointMake(target1/target3 * 280 - 140, 0);
+    self.targetStar2.position = CGPointMake(target2/target3 * 280 - 140, 0);
+    self.targetStar3.position = CGPointMake(140, 0); //Always at the end which is 140p
+    
+    self.targetStar1.alpha = self.targetStar2.alpha = self.targetStar3.alpha = 1;
+}
+
+-(void)updateProgressBar:(float)percent{
+    if (percent < 0) percent = 0;
+    else if (percent > 100) percent = 100;
+    
+    float xValue = -280 + (percent / 100 * 280);
+    
+    if (self.progressBar.position.x < xValue){
+        self.progressBar.position = CGPointMake(xValue, self.progressBar.position.y);
+    }
 }
 
 -(void)updateMovesLeft:(NSInteger)movesLeft{
@@ -144,6 +201,10 @@
         
         self.levelLabel.text = [levelData objectForKey:@"name"];
         [self updateMovesLeft:[[levelData objectForKey:@"movesAllowed"] integerValue]];
+        
+        [self updateTargetStar1:[[levelData objectForKey:@"targetScore1"] floatValue]
+                          star2:[[levelData objectForKey:@"targetScore2"] floatValue]
+                          star3:[[levelData objectForKey:@"targetScore3"] floatValue]];
     }
 }
 
