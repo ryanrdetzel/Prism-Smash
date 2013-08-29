@@ -37,6 +37,9 @@
 		C53E004017CE4ACF00D6F119 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = C53E003E17CE4ACF00D6F119 /* star.png */; };
 		C53E004117CE4ACF00D6F119 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C53E003F17CE4ACF00D6F119 /* star@2x.png */; };
 		C53E004317CE84A600D6F119 /* gameboard-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C53E004217CE84A600D6F119 /* gameboard-mask.png */; };
+		C53E004717CEC56600D6F119 /* progress-bar-background.png in Resources */ = {isa = PBXBuildFile; fileRef = C53E004417CEC56600D6F119 /* progress-bar-background.png */; };
+		C53E004817CEC56600D6F119 /* progress-bar-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = C53E004517CEC56600D6F119 /* progress-bar-mask.png */; };
+		C53E004917CEC56600D6F119 /* progress-bar-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = C53E004617CEC56600D6F119 /* progress-bar-middle.png */; };
 		C53EFFB917CD438900D6F119 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53EFFB817CD438900D6F119 /* Foundation.framework */; };
 		C53EFFBB17CD438900D6F119 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53EFFBA17CD438900D6F119 /* CoreGraphics.framework */; };
 		C53EFFBD17CD438900D6F119 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53EFFBC17CD438900D6F119 /* UIKit.framework */; };
@@ -99,6 +102,9 @@
 		C53E003E17CE4ACF00D6F119 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		C53E003F17CE4ACF00D6F119 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		C53E004217CE84A600D6F119 /* gameboard-mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gameboard-mask.png"; sourceTree = "<group>"; };
+		C53E004417CEC56600D6F119 /* progress-bar-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar-background.png"; sourceTree = "<group>"; };
+		C53E004517CEC56600D6F119 /* progress-bar-mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar-mask.png"; sourceTree = "<group>"; };
+		C53E004617CEC56600D6F119 /* progress-bar-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar-middle.png"; sourceTree = "<group>"; };
 		C53EFFB517CD438900D6F119 /* PrismSmash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrismSmash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53EFFB817CD438900D6F119 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C53EFFBA17CD438900D6F119 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -168,6 +174,9 @@
 				C53E003F17CE4ACF00D6F119 /* star@2x.png */,
 				C53E000217CD556B00D6F119 /* background.png */,
 				C53E000317CD556B00D6F119 /* background@2x.png */,
+				C53E004417CEC56600D6F119 /* progress-bar-background.png */,
+				C53E004517CEC56600D6F119 /* progress-bar-mask.png */,
+				C53E004617CEC56600D6F119 /* progress-bar-middle.png */,
 				C53E003A17CD633400D6F119 /* Blocks */,
 			);
 			name = Images;
@@ -386,9 +395,11 @@
 				C53E003917CD630A00D6F119 /* yellow-block@2x.png in Resources */,
 				C53E003417CD630A00D6F119 /* purple-block.png in Resources */,
 				C53E002C17CD630A00D6F119 /* lightblue-block.png in Resources */,
+				C53E004717CEC56600D6F119 /* progress-bar-background.png in Resources */,
 				C53E003217CD630A00D6F119 /* orange-block.png in Resources */,
 				C53E003117CD630A00D6F119 /* blue-block@2x.png in Resources */,
 				C53E003317CD630A00D6F119 /* orange-block@2x.png in Resources */,
+				C53E004917CEC56600D6F119 /* progress-bar-middle.png in Resources */,
 				C53E002B17CD630A00D6F119 /* pink-block@2x.png in Resources */,
 				C53E002817CD630A00D6F119 /* lightgreen-block.png in Resources */,
 				C53E002617CD630A00D6F119 /* pink-block.png in Resources */,
@@ -402,6 +413,7 @@
 				C53E002E17CD630A00D6F119 /* gray-block@2x.png in Resources */,
 				C53E000417CD556B00D6F119 /* background.png in Resources */,
 				C53E002F17CD630A00D6F119 /* lightblue-block@2x.png in Resources */,
+				C53E004817CEC56600D6F119 /* progress-bar-mask.png in Resources */,
 				C53E000517CD556B00D6F119 /* background@2x.png in Resources */,
 				C53E003617CD630A00D6F119 /* red-block.png in Resources */,
 				C53E002417CD630A00D6F119 /* green-block.png in Resources */,

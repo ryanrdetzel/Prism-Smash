@@ -33,16 +33,22 @@
         background.position = CGPointMake(160, 284);
         [self addChild:background];
         
+        SKCropNode *maskNode = [[SKCropNode alloc] init];
+        SKSpriteNode *gameboardMask = [[SKSpriteNode alloc] initWithImageNamed:@"gameboard-mask"];
+        gameboardMask.anchorPoint = CGPointZero;
+        maskNode.maskNode = gameboardMask;
+        
         self.gameBoard = [[PSGameBoard alloc] init];
         
-        [self addChild:self.gameBoard];
+        [maskNode addChild:self.gameBoard];
+        [self addChild:maskNode];
         
         [self setupInterface];
         
-        //Set the gameboard so it's under the earned stars.
-        CGRect screenFrame = [[UIScreen mainScreen] bounds];
-        self.gameBoard.position = CGPointMake((screenFrame.size.width-kGameBoardWidth) / 2,
-                                              self.earnedStar1.position.y - kGameBoardHeight - 30);
+        // Keep these here since we rely on some things being added to the node.
+        maskNode.position = CGPointMake(0,self.earnedStar1.position.y - kGameBoardHeight - 30);
+        self.gameBoard.position = CGPointMake((maskNode.maskNode.calculateAccumulatedFrame.size.width-kGameBoardWidth)/2, 0);
+        
     }
     return self;
 }
@@ -92,19 +98,21 @@
     
     /* Setup the stars */
     
-    self.earnedStar2 = [SKSpriteNode spriteNodeWithImageNamed:@"star"];
+    SKTexture *starTexture = [SKTexture textureWithImageNamed:@"star"];
+    
+    self.earnedStar2 = [SKSpriteNode spriteNodeWithTexture:starTexture];
     CGPoint pos = self.levelLabel.position;
     pos.y -= 20;
     self.earnedStar2.alpha = kEarnedStarAlpha;
     self.earnedStar2.position = pos;
     
-    self.earnedStar1 = [SKSpriteNode spriteNodeWithImageNamed:@"star"];
+    self.earnedStar1 = [SKSpriteNode spriteNodeWithTexture:starTexture];
     pos = self.earnedStar2.position;
     pos.x -= 35;
     self.earnedStar1.position = pos;
     self.earnedStar1.alpha = kEarnedStarAlpha;
     
-    self.earnedStar3 = [SKSpriteNode spriteNodeWithImageNamed:@"star"];
+    self.earnedStar3 = [SKSpriteNode spriteNodeWithTexture:starTexture];
     pos = self.earnedStar2.position;
     pos.x += 35;
     self.earnedStar3.position = pos;

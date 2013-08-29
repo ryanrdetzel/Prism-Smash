@@ -12,7 +12,7 @@
 #import "PSGameConstants.h"
 
 @interface PSGameBoard()
-@property (nonatomic, strong) PSGameScene *gameScene;
+@property (nonatomic, readonly) PSGameScene *gameScene;
 @property (nonatomic) BOOL gameIsActive;
 
 @property (nonatomic, strong) NSMutableArray *blocks;
@@ -28,7 +28,6 @@
 -(id)init{
     self = [super init];
     
-    self.gameScene = (PSGameScene *)self.scene;
     self.gameIsActive = NO;
     self.swapAllowed = YES;
     self.sequenceRun = 0;
@@ -36,6 +35,10 @@
     self.userInteractionEnabled = YES;
     
     return self;
+}
+
+-(PSGameScene *)gameScene{
+    return (PSGameScene *)self.scene;
 }
 
 -(NSMutableArray *)blocks{
