@@ -35,6 +35,15 @@
     [skView presentScene:self.gameScene];
 }
 
+-(PSGameOverScene *)gameOverScene{
+    if (!_gameOverScene){
+        _gameOverScene = [PSGameOverScene sceneWithSize:self.view.bounds.size];
+        _gameOverScene.viewController = self;
+        _gameOverScene.scaleMode = SKSceneScaleModeAspectFill;
+    }
+    return _gameOverScene;
+}
+
 -(void)updateLevelAccomplishments:(NSMutableDictionary *)levelData{
     //Get the information about this level like stars earned and high score and update the level data
 }
@@ -65,8 +74,22 @@
     return _levelData;
 }
 
-- (BOOL)shouldAutorotate
-{
+-(void)showGameScene{
+    SKView * skView = (SKView *)self.view;
+
+    SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:1];
+    [skView presentScene:self.gameScene transition:doors];
+}
+
+-(void)showGameOverScene:(NSString *)reason{
+    SKView * skView = (SKView *)self.view;
+
+    SKTransition *doors = [SKTransition doorsCloseVerticalWithDuration:1];
+    [skView presentScene:self.gameOverScene transition:doors];
+    self.gameOverScene.reasonLabel.text = reason;
+}
+
+- (BOOL)shouldAutorotate{
     return NO;
 }
 

@@ -11,4 +11,7 @@
 
 @interface PSViewController : UIViewController
 
+-(void)showGameOverScene:(NSString *)reason;
+-(void)showGameScene;
+
 @end

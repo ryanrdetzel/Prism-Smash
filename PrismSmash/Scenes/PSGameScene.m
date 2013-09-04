@@ -186,6 +186,7 @@
     [self addChild:animatedStar];
     animatedStar.position = positionInScene;
     animatedStar.zPosition = 2;
+    animatedStar.name = @"animatedStar";
     
     SKEmitterNode *emitter = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"StarDust" ofType:@"sks"]];
     emitter.position = CGPointMake(0,0);
@@ -282,6 +283,10 @@
 
     self.targetStar3.alpha = self.targetStar2.alpha = self.targetStar1.alpha = 0;
     self.earnedStar1.alpha = self.earnedStar2.alpha = self.earnedStar3.alpha = kEarnedStarAlpha;
+}
+
+-(void)showGameOverSceneWithReason:(NSString *)reason{
+    [self.viewController showGameOverScene:reason];
 }
 
 -(void)loadLevel:(NSDictionary *)levelData{

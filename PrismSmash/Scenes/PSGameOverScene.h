@@ -7,7 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "PSViewController.h"
 
 @interface PSGameOverScene : SKScene
-
+@property (nonatomic, strong) PSViewController *viewController;
+@property (nonatomic, strong) SKLabelNode *reasonLabel;
 @end

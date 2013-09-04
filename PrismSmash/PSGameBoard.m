@@ -19,6 +19,8 @@
 @property (nonatomic, strong) PSBlock *selectedBlock;
 @property (nonatomic) BOOL swapAllowed;
 
+@property (nonatomic, strong) NSString *levelName;
+
 @property (nonatomic) NSInteger sequenceRun;
 @property (nonatomic) NSInteger score;
 
@@ -50,6 +52,11 @@
 
 -(PSGameScene *)gameScene{
     return (PSGameScene *)self.scene;
+}
+
+-(NSString *)levelName{
+    if (!_levelName) _levelName = @"";
+    return _levelName;
 }
 
 -(void)setMovesPerformed:(NSInteger)movesPerformed{
@@ -92,7 +99,8 @@
     self.targetScore1 = [[levelData objectForKey:@"targetScore1"] integerValue];
     self.targetScore2 = [[levelData objectForKey:@"targetScore2"] integerValue];
     self.targetScore3 = [[levelData objectForKey:@"targetScore3"] integerValue];
-
+    self.levelName = [levelData objectForKey:@"name"];
+    
     self.movesPerformed = 0;
 
     NSArray *blocks = [levelData objectForKey:@"blocks"];
@@ -344,11 +352,69 @@
         /* Turn user interaction back on */
         self.swapAllowed = YES;
         self.sequenceRun = 0;
+        
+        [self checkGameStatus];
     }else{
         [self removeBlocks:[blocksToRemove allObjects]];
         self.swapAllowed = NO;
     }
     return [blocksToRemove count];
+}
+
+-(void)saveGameScore{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *userLevelData = [[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:self.levelName]];
+    
+    if (userLevelData == nil){
+        userLevelData = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSNumber *previousStarsCollected = [userLevelData objectForKey:@"starsCollected"];
+    NSNumber *highScore = [userLevelData objectForKey:@"highScore"];
+    
+    NSInteger starsCollected = 0;
+    
+    if (previousStarsCollected == nil){
+        previousStarsCollected = @0;
+    }
+    if (highScore == nil){
+        highScore = @0;
+    }
+    
+    if (self.score >= self.targetScore3){
+        starsCollected = 3;
+    }
+    else if (self.score >= self.targetScore2){
+        starsCollected = 2;
+    }
+    else if (self.score >= self.targetScore1){
+        starsCollected = 1;
+    }
+    
+    if (starsCollected > [previousStarsCollected integerValue]){
+        [userLevelData setObject:[NSNumber numberWithInt:starsCollected] forKey:@"starsCollected"];
+    }
+    if (self.score > [highScore integerValue]){
+        [userLevelData setObject:[NSNumber numberWithInt:self.score] forKey:@"highScore"];
+    }
+    
+    [defaults setObject:userLevelData forKey:self.levelName];
+    [defaults synchronize];
+
+}
+
+-(void)gameOverWithReason:(NSString *)reason{
+    self.gameIsActive = NO;
+    self.swapAllowed = NO;
+    
+    [self saveGameScore];
+    [self.gameScene showGameOverSceneWithReason:reason];
+}
+
+-(void)checkGameStatus{
+    if (self.movesPerformed >= self.movesAllowed){
+        [self gameOverWithReason:@"Your ran out of moves"];
+    }
 }
 
 -(CGPoint)findCenterPoint:(NSArray *)blocks{
@@ -404,6 +470,7 @@
     points.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     points.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     points.fontColor = [SKColor whiteColor];
+    points.name = @"points";
     
     // We want the points on the scene not on the board so we have to convert the point
     [self.scene addChild:points];

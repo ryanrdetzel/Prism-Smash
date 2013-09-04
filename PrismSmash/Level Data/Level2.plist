@@ -91,7 +91,7 @@
 		<string>yellow</string>
 	</array>
 	<key>movesAllowed</key>
-	<integer>20</integer>
+	<integer>2</integer>
 	<key>targetScore1</key>
 	<string>6000</string>
 	<key>targetScore2</key>

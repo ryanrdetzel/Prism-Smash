@@ -7,7 +7,48 @@
 //
 
 #import "PSGameOverScene.h"
+#import "PSGameConstants.h"
+
+@interface PSGameOverScene()
+@property (nonatomic, weak) SKLabelNode *gameOverLabel;
+@end
 
 @implementation PSGameOverScene
+
+-(id)initWithSize:(CGSize)size {
+    if (self = [super initWithSize:size]) {
+        self.backgroundColor = [SKColor blackColor];
+        self.userInteractionEnabled = YES;
+        
+        [self addChild:self.gameOverLabel];
+        [self addChild:self.reasonLabel];
+    }
+    return self;
+}
+
+-(SKLabelNode *)gameOverLabel{
+    if (!_gameOverLabel){
+        _gameOverLabel = [SKLabelNode labelNodeWithFontNamed:kFont1];
+        _gameOverLabel.text = @"Game Over";
+        _gameOverLabel.position = CGPointMake(self.frame.size.width / 2,
+                                              self.frame.size.height / 2);
+    }
+    return _gameOverLabel;
+}
+
+-(SKLabelNode *)reasonLabel{
+    if (!_reasonLabel){
+        _reasonLabel = [SKLabelNode labelNodeWithFontNamed:kFont1];
+        _reasonLabel.fontSize = 16;
+        CGPoint position = self.gameOverLabel.position;
+        position.y -= 30;
+        _reasonLabel.position = position;
+    }
+    return _reasonLabel;
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.viewController showGameScene];
+}
 
 @end
