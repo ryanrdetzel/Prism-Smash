@@ -58,6 +58,8 @@
 		C53EFFF617CD500900D6F119 /* PSGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C53EFFF517CD500900D6F119 /* PSGameScene.m */; };
 		C53EFFF917CD501800D6F119 /* PSGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C53EFFF817CD501800D6F119 /* PSGameOverScene.m */; };
 		C53EFFFD17CD527300D6F119 /* PSGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = C53EFFFC17CD527300D6F119 /* PSGameBoard.m */; };
+		C5A2FF5F17D75E72004F918C /* StarDust.sks in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF5E17D75E72004F918C /* StarDust.sks */; };
+		C5A2FF6117D75EBF004F918C /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6017D75EBF004F918C /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +134,8 @@
 		C53EFFF817CD501800D6F119 /* PSGameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSGameOverScene.m; path = Scenes/PSGameOverScene.m; sourceTree = "<group>"; };
 		C53EFFFB17CD527300D6F119 /* PSGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSGameBoard.h; sourceTree = "<group>"; };
 		C53EFFFC17CD527300D6F119 /* PSGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSGameBoard.m; sourceTree = "<group>"; };
+		C5A2FF5E17D75E72004F918C /* StarDust.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StarDust.sks; sourceTree = "<group>"; };
+		C5A2FF6017D75EBF004F918C /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,7 @@
 		C53E000617CD557100D6F119 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C5A2FF5E17D75E72004F918C /* StarDust.sks */,
 				C53E003B17CE0B0500D6F119 /* Level Data */,
 				C53E000717CD557900D6F119 /* Images */,
 			);
@@ -171,6 +176,7 @@
 		C53E000717CD557900D6F119 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C5A2FF6017D75EBF004F918C /* spark.png */,
 				C53E004217CE84A600D6F119 /* gameboard-mask.png */,
 				C53E003E17CE4ACF00D6F119 /* star.png */,
 				C53E003F17CE4ACF00D6F119 /* star@2x.png */,
@@ -392,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C53E003717CD630A00D6F119 /* red-block@2x.png in Resources */,
+				C5A2FF6117D75EBF004F918C /* spark.png in Resources */,
 				C53E003017CD630A00D6F119 /* blue-block.png in Resources */,
 				C53E004317CE84A600D6F119 /* gameboard-mask.png in Resources */,
 				C53E004117CE4ACF00D6F119 /* star@2x.png in Resources */,
@@ -411,6 +418,7 @@
 				C53EFFC517CD438900D6F119 /* InfoPlist.strings in Resources */,
 				C53E002A17CD630A00D6F119 /* brown-block@2x.png in Resources */,
 				C53E002917CD630A00D6F119 /* lightgreen-block@2x.png in Resources */,
+				C5A2FF5F17D75E72004F918C /* StarDust.sks in Resources */,
 				C53E003517CD630A00D6F119 /* purple-block@2x.png in Resources */,
 				C53E003D17CE0B2300D6F119 /* Level1.plist in Resources */,
 				C53E002E17CD630A00D6F119 /* gray-block@2x.png in Resources */,

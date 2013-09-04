@@ -27,6 +27,9 @@
 @property (nonatomic, strong) SKSpriteNode *targetStar2;
 @property (nonatomic, strong) SKSpriteNode *targetStar3;
 
+@property (nonatomic) float finalProgressBarXPosition;
+@property (nonatomic) NSTimeInterval previousTime;
+
 @end
 
 @implementation PSGameScene
@@ -111,19 +114,22 @@
     pos.y -= 20;
     self.earnedStar2.alpha = kEarnedStarAlpha;
     self.earnedStar2.position = pos;
+    self.earnedStar2.zPosition = 2;
     
     self.earnedStar1 = [SKSpriteNode spriteNodeWithTexture:starTexture];
     pos = self.earnedStar2.position;
     pos.x -= 35;
     self.earnedStar1.position = pos;
     self.earnedStar1.alpha = kEarnedStarAlpha;
-    
+    self.earnedStar1.zPosition = 2;
+
     self.earnedStar3 = [SKSpriteNode spriteNodeWithTexture:starTexture];
     pos = self.earnedStar2.position;
     pos.x += 35;
     self.earnedStar3.position = pos;
     self.earnedStar3.alpha = kEarnedStarAlpha;
-    
+    self.earnedStar3.zPosition = 2;
+
     [self addChild:self.earnedStar1];
     [self addChild:self.earnedStar2];
     [self addChild:self.earnedStar3];
@@ -167,16 +173,89 @@
     self.targetStar1.alpha = self.targetStar2.alpha = self.targetStar3.alpha = 1;
 }
 
+
+-(void)moveTargetStar:(SKSpriteNode *)targetStar ToEarnedStart:(SKSpriteNode *)earnedStar{
+    targetStar.alpha = 0;
+    
+    CGPoint positionInScene = [targetStar.scene convertPoint:targetStar.position
+                                                    fromNode:targetStar.parent];
+    
+    SKSpriteNode *animatedStar = [SKSpriteNode spriteNodeWithTexture:targetStar.texture
+                                                                size:targetStar.size];
+    
+    [self addChild:animatedStar];
+    animatedStar.position = positionInScene;
+    animatedStar.zPosition = 2;
+    
+    SKEmitterNode *emitter = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"StarDust" ofType:@"sks"]];
+    emitter.position = CGPointMake(0,0);
+    emitter.name = @"stardust";
+    emitter.particleZPosition = 0;
+    emitter.zPosition = 1;
+    
+    emitter.targetNode = self;    // Send the particles to the scene.
+    [animatedStar addChild:emitter];
+    
+    
+    UIBezierPath *p = [UIBezierPath bezierPath];
+    [p moveToPoint:animatedStar.position];
+    [p addCurveToPoint:earnedStar.position
+         controlPoint1:CGPointMake(animatedStar.position.x + 50, animatedStar.position.y + (earnedStar.position.y/2))
+         controlPoint2:CGPointMake(animatedStar.position.x - 250, animatedStar.position.y + (earnedStar.position.y/2))];
+    
+    SKAction *moveTargetStar = [SKAction followPath:p.CGPath asOffset:NO orientToPath:NO duration:2.0];
+    SKAction *enlargeTargetStar = [SKAction scaleBy:1 + targetStar.size.width / earnedStar.size.width duration:2];
+    SKAction *action = [SKAction group:@[moveTargetStar, enlargeTargetStar]];
+    
+    [animatedStar runAction:action completion:^{
+        SKAction *anAction = [SKAction customActionWithDuration:5 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+            emitter.particleBirthRate = 30 -  ((elapsedTime * 10));
+            if (elapsedTime >= 5){
+                [animatedStar removeFromParent];
+            }
+        }];
+        [emitter runAction:anAction];
+        earnedStar.alpha = 1;
+        animatedStar.alpha = 0;
+    }];
+}
+
+- (void)update:(NSTimeInterval)currentTime{
+    /* Only run if we need to update the progress bar */
+    float positionDiff = self.finalProgressBarXPosition - self.progressBar.position.x;
+    if (positionDiff > 0){
+        float timeDiff = currentTime - self.previousTime;
+        float speed = 40;
+        if (positionDiff > 50) speed = 60;
+        if (positionDiff > 70) speed = 80;
+        
+        float moveBy = timeDiff * speed;
+        self.progressBar.position = CGPointMake(self.progressBar.position.x + moveBy, self.progressBar.position.y);
+        
+        //Check to see if we crossed a target star
+        for (SKSpriteNode *targetStar in @[self.targetStar1, self.targetStar2, self.targetStar3]){
+            if (targetStar.alpha == 1){
+                if (self.progressBar.position.x + self.progressBar.size.width / 2 >= targetStar.position.x){
+                    SKSpriteNode *earnedStar = self.earnedStar1;
+                    if (targetStar == self.targetStar2){
+                        earnedStar = self.earnedStar2;
+                    }else if (targetStar == self.targetStar3){
+                        earnedStar = self.earnedStar3;
+                    }
+                    [self moveTargetStar:targetStar ToEarnedStart:earnedStar];
+                }
+            }
+        }
+
+    }
+    self.previousTime = currentTime;
+}
+
 -(void)updateProgressBar:(float)percent{
     if (percent < 0) percent = 0;
     else if (percent > 100) percent = 100;
     
-    float xValue = -280 + (percent / 100 * 280);
-    
-    if (self.progressBar.position.x < xValue){
-        SKAction *move = [SKAction moveToX:xValue duration:1.0];
-        [self.progressBar runAction:move];
-    }
+    self.finalProgressBarXPosition = -280 + (percent / 100 * 280);
 }
 
 -(void)updateScore:(NSInteger)newScore percentComplete:(NSInteger)percent{
@@ -200,6 +279,8 @@
     self.scoreLabel.text = @"0";
     self.movesLeftLabel.text = @"0";
     
+
+    self.targetStar3.alpha = self.targetStar2.alpha = self.targetStar1.alpha = 0;
     self.earnedStar1.alpha = self.earnedStar2.alpha = self.earnedStar3.alpha = kEarnedStarAlpha;
 }
 
