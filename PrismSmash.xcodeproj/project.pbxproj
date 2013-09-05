@@ -63,6 +63,15 @@
 		C5A2FF6417D8B073004F918C /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6217D8B073004F918C /* home.png */; };
 		C5A2FF6517D8B073004F918C /* home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6317D8B073004F918C /* home@2x.png */; };
 		C5A2FF6717D8C3B5004F918C /* Level3.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6617D8C3B5004F918C /* Level3.plist */; };
+		C5A2FF7217D8CCC0004F918C /* blockFall.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6917D8CCC0004F918C /* blockFall.caf */; };
+		C5A2FF7317D8CCC0004F918C /* levelOver.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6A17D8CCC0004F918C /* levelOver.caf */; };
+		C5A2FF7417D8CCC0004F918C /* sequence0.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6B17D8CCC0004F918C /* sequence0.caf */; };
+		C5A2FF7517D8CCC0004F918C /* sequence1.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6C17D8CCC0004F918C /* sequence1.caf */; };
+		C5A2FF7617D8CCC0004F918C /* sequence2.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6D17D8CCC0004F918C /* sequence2.caf */; };
+		C5A2FF7717D8CCC0004F918C /* sequence3.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6E17D8CCC0004F918C /* sequence3.caf */; };
+		C5A2FF7817D8CCC0004F918C /* sequence4.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF6F17D8CCC0004F918C /* sequence4.caf */; };
+		C5A2FF7917D8CCC0004F918C /* sequence5.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF7017D8CCC0004F918C /* sequence5.caf */; };
+		C5A2FF7A17D8CCC0004F918C /* earnStar.caf in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF7117D8CCC0004F918C /* earnStar.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +151,15 @@
 		C5A2FF6217D8B073004F918C /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		C5A2FF6317D8B073004F918C /* home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home@2x.png"; sourceTree = "<group>"; };
 		C5A2FF6617D8C3B5004F918C /* Level3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Level3.plist; path = "Level Data/Level3.plist"; sourceTree = "<group>"; };
+		C5A2FF6917D8CCC0004F918C /* blockFall.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = blockFall.caf; sourceTree = "<group>"; };
+		C5A2FF6A17D8CCC0004F918C /* levelOver.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelOver.caf; sourceTree = "<group>"; };
+		C5A2FF6B17D8CCC0004F918C /* sequence0.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sequence0.caf; sourceTree = "<group>"; };
+		C5A2FF6C17D8CCC0004F918C /* sequence1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sequence1.caf; sourceTree = "<group>"; };
+		C5A2FF6D17D8CCC0004F918C /* sequence2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sequence2.caf; sourceTree = "<group>"; };
+		C5A2FF6E17D8CCC0004F918C /* sequence3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sequence3.caf; sourceTree = "<group>"; };
+		C5A2FF6F17D8CCC0004F918C /* sequence4.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sequence4.caf; sourceTree = "<group>"; };
+		C5A2FF7017D8CCC0004F918C /* sequence5.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sequence5.caf; sourceTree = "<group>"; };
+		C5A2FF7117D8CCC0004F918C /* earnStar.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = earnStar.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,9 +190,10 @@
 		C53E000617CD557100D6F119 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C5A2FF5E17D75E72004F918C /* StarDust.sks */,
+				C5A2FF6817D8CCC0004F918C /* Sounds */,
 				C53E003B17CE0B0500D6F119 /* Level Data */,
 				C53E000717CD557900D6F119 /* Images */,
+				C5A2FF5E17D75E72004F918C /* StarDust.sks */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -329,6 +348,22 @@
 			name = Scenes;
 			sourceTree = "<group>";
 		};
+		C5A2FF6817D8CCC0004F918C /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				C5A2FF6917D8CCC0004F918C /* blockFall.caf */,
+				C5A2FF6A17D8CCC0004F918C /* levelOver.caf */,
+				C5A2FF6B17D8CCC0004F918C /* sequence0.caf */,
+				C5A2FF6C17D8CCC0004F918C /* sequence1.caf */,
+				C5A2FF6D17D8CCC0004F918C /* sequence2.caf */,
+				C5A2FF6E17D8CCC0004F918C /* sequence3.caf */,
+				C5A2FF6F17D8CCC0004F918C /* sequence4.caf */,
+				C5A2FF7017D8CCC0004F918C /* sequence5.caf */,
+				C5A2FF7117D8CCC0004F918C /* earnStar.caf */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -413,11 +448,13 @@
 				C53E003017CD630A00D6F119 /* blue-block.png in Resources */,
 				C53E004317CE84A600D6F119 /* gameboard-mask.png in Resources */,
 				C53E004117CE4ACF00D6F119 /* star@2x.png in Resources */,
+				C5A2FF7317D8CCC0004F918C /* levelOver.caf in Resources */,
 				C53E003917CD630A00D6F119 /* yellow-block@2x.png in Resources */,
 				C53E003417CD630A00D6F119 /* purple-block.png in Resources */,
 				C53E002C17CD630A00D6F119 /* lightblue-block.png in Resources */,
 				C53E004717CEC56600D6F119 /* progress-bar-background.png in Resources */,
 				C53E003217CD630A00D6F119 /* orange-block.png in Resources */,
+				C5A2FF7417D8CCC0004F918C /* sequence0.caf in Resources */,
 				C53E003117CD630A00D6F119 /* blue-block@2x.png in Resources */,
 				C53E003317CD630A00D6F119 /* orange-block@2x.png in Resources */,
 				C53E004917CEC56600D6F119 /* progress-bar-middle.png in Resources */,
@@ -428,19 +465,26 @@
 				C53E002717CD630A00D6F119 /* brown-block.png in Resources */,
 				C53EFFC517CD438900D6F119 /* InfoPlist.strings in Resources */,
 				C53E002A17CD630A00D6F119 /* brown-block@2x.png in Resources */,
+				C5A2FF7917D8CCC0004F918C /* sequence5.caf in Resources */,
+				C5A2FF7A17D8CCC0004F918C /* earnStar.caf in Resources */,
+				C5A2FF7517D8CCC0004F918C /* sequence1.caf in Resources */,
 				C53E002917CD630A00D6F119 /* lightgreen-block@2x.png in Resources */,
 				C5A2FF5F17D75E72004F918C /* StarDust.sks in Resources */,
 				C53E003517CD630A00D6F119 /* purple-block@2x.png in Resources */,
 				C53E003D17CE0B2300D6F119 /* Level1.plist in Resources */,
 				C53E002E17CD630A00D6F119 /* gray-block@2x.png in Resources */,
 				C53E000417CD556B00D6F119 /* background.png in Resources */,
+				C5A2FF7817D8CCC0004F918C /* sequence4.caf in Resources */,
 				C53E002F17CD630A00D6F119 /* lightblue-block@2x.png in Resources */,
 				C53E004817CEC56600D6F119 /* progress-bar-mask.png in Resources */,
 				C53E000517CD556B00D6F119 /* background@2x.png in Resources */,
 				C53E003617CD630A00D6F119 /* red-block.png in Resources */,
 				C5A2FF6717D8C3B5004F918C /* Level3.plist in Resources */,
 				C53E002417CD630A00D6F119 /* green-block.png in Resources */,
+				C5A2FF7217D8CCC0004F918C /* blockFall.caf in Resources */,
 				C53E003817CD630A00D6F119 /* yellow-block.png in Resources */,
+				C5A2FF7617D8CCC0004F918C /* sequence2.caf in Resources */,
+				C5A2FF7717D8CCC0004F918C /* sequence3.caf in Resources */,
 				C53E004D17CF5F8D00D6F119 /* Level2.plist in Resources */,
 				C53E004017CE4ACF00D6F119 /* star.png in Resources */,
 				C53E002D17CD630A00D6F119 /* gray-block.png in Resources */,

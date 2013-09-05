@@ -11,6 +11,7 @@
 
 @interface PSGameOverScene()
 @property (nonatomic, weak) SKLabelNode *gameOverLabel;
+@property (nonatomic, strong) SKAction *gameOverSound;
 @end
 
 @implementation PSGameOverScene
@@ -20,10 +21,16 @@
         self.backgroundColor = [SKColor blackColor];
         self.userInteractionEnabled = YES;
         
+        self.gameOverSound = [SKAction playSoundFileNamed:@"levelOver.caf" waitForCompletion:NO];
+        
         [self addChild:self.gameOverLabel];
         [self addChild:self.reasonLabel];
     }
     return self;
+}
+
+-(void)didMoveToView:(SKView *)view{
+    [self runAction:self.gameOverSound];
 }
 
 -(SKLabelNode *)gameOverLabel{

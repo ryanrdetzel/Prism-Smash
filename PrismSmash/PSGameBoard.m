@@ -31,6 +31,14 @@
 @property (nonatomic) NSInteger targetScore2;
 @property (nonatomic) NSInteger targetScore3;
 
+@property (nonatomic, strong) SKAction *blockFallSound;
+@property (nonatomic, strong) SKAction *sequence0Sound;
+@property (nonatomic, strong) SKAction *sequence1Sound;
+@property (nonatomic, strong) SKAction *sequence2Sound;
+@property (nonatomic, strong) SKAction *sequence3Sound;
+@property (nonatomic, strong) SKAction *sequence4Sound;
+@property (nonatomic, strong) SKAction *sequence5Sound;
+
 @end
 
 @implementation PSGameBoard
@@ -45,6 +53,15 @@
     self.movesAllowed = 0;
     self.movesPerformed = 0;
     
+    self.blockFallSound = [SKAction playSoundFileNamed:@"blockFall.caf" waitForCompletion:NO];
+    
+    self.sequence0Sound = [SKAction playSoundFileNamed:@"sequence0.caf" waitForCompletion:NO];
+    self.sequence1Sound = [SKAction playSoundFileNamed:@"sequence1.caf" waitForCompletion:NO];
+    self.sequence2Sound = [SKAction playSoundFileNamed:@"sequence2.caf" waitForCompletion:NO];
+    self.sequence3Sound = [SKAction playSoundFileNamed:@"sequence3.caf" waitForCompletion:NO];
+    self.sequence4Sound = [SKAction playSoundFileNamed:@"sequence4.caf" waitForCompletion:NO];
+    self.sequence5Sound = [SKAction playSoundFileNamed:@"sequence5.caf" waitForCompletion:NO];
+
     self.userInteractionEnabled = YES;
     
     return self;
@@ -210,22 +227,25 @@
         [self removeBlock:block];
     }
     
+    float fallOffset = 0.01;
+    
     for (PSBlock *block in [self.blocks sortedArrayUsingSelector:@selector(compare:)]){
         if (block.moveDownBy > 0){
             SKAction *moveDown = [SKAction moveByX:0.0 y:-block.moveDownBy
-                                          duration:kFallDuration];
+                                          duration:kFallDuration + fallOffset];
             
             [block runAction:moveDown completion:^(){
                 NSInteger new_row = [self calcRow:block];
                 [block updateRow:new_row col:block.col];
+                [self runAction:self.blockFallSound];
             }];
-            
+            fallOffset += 0.01;
             block.moveDownBy = 0; //Make sure we reset this
         }
     }
     
     /* Wait for all the blocks to fall into place and check for combos again */
-    SKAction *doneAction = [SKAction waitForDuration:kFallDuration + 0.1];
+    SKAction *doneAction = [SKAction waitForDuration:kFallDuration + 0.1 + fallOffset];
     [self runAction:doneAction completion:^(){
         [self findSequences];
     }];
@@ -317,7 +337,6 @@
                 [partOfHorizonalSequence addObjectsFromArray:currentRun];
                 [blocksToRemove addObjectsFromArray:currentRun];
                 [self scoreRun:currentRun];
-                self.sequenceRun++;
             }
         }
         
@@ -343,7 +362,6 @@
                 [partOfVerticalSequence addObjectsFromArray:currentRun];
                 [blocksToRemove addObjectsFromArray:currentRun];
                 [self scoreRun:currentRun];
-                self.sequenceRun++;
             }
         }
     }
@@ -436,8 +454,24 @@
     
     if ([currentRunBlocks count] == 4){
         multiplier = kRunFourMultiplier;
+        [self runAction:self.sequence5Sound];
     }else if ([currentRunBlocks count] == 5){
         multiplier = kRunFiveMultiplier;
+        [self runAction:self.sequence5Sound];
+    }else{
+        if (self.sequenceRun == 0){
+            [self runAction:self.sequence0Sound];
+        }else if (self.sequenceRun == 1){
+            [self runAction:self.sequence1Sound];
+        }else if (self.sequenceRun == 2){
+            [self runAction:self.sequence2Sound];
+        }else if (self.sequenceRun == 3){
+            [self runAction:self.sequence3Sound];
+        }else if (self.sequenceRun == 4){
+            [self runAction:self.sequence4Sound];
+        }else{
+            [self runAction:self.sequence5Sound];
+        }
     }
     
     for (PSBlock *block in currentRunBlocks){

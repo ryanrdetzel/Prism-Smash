@@ -8,6 +8,7 @@
 
 #import "PSAppDelegate.h"
 #import "PSViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation PSAppDelegate
 
@@ -16,6 +17,15 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [[PSViewController alloc] init];
     [self.window makeKeyAndVisible];
+    
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+    BOOL otherAudioIsPlaying = session.otherAudioPlaying;
+    
+    if (otherAudioIsPlaying) {
+        [session setCategory: AVAudioSessionCategoryAmbient error: nil];
+    } else {
+        [session setCategory: AVAudioSessionCategorySoloAmbient error: nil];
+    }
     
     return YES;
 }

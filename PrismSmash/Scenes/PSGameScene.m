@@ -30,6 +30,8 @@
 @property (nonatomic) float finalProgressBarXPosition;
 @property (nonatomic) NSTimeInterval previousTime;
 
+@property (nonatomic, strong) SKAction *earnedStarSound;
+
 @end
 
 @implementation PSGameScene
@@ -54,6 +56,8 @@
         
         [self setupInterface];
         
+        self.earnedStarSound = [SKAction playSoundFileNamed:@"earnStar.caf" waitForCompletion:NO];
+
         // Keep these here since we rely on some things being added to the node.
         maskNode.position = CGPointMake(0,self.earnedStar1.position.y - kGameBoardHeight - 30);
         self.gameBoard.position = CGPointMake((maskNode.maskNode.calculateAccumulatedFrame.size.width-kGameBoardWidth)/2, 0);
@@ -204,7 +208,7 @@
     
     SKAction *moveTargetStar = [SKAction followPath:p.CGPath asOffset:NO orientToPath:NO duration:2.0];
     SKAction *enlargeTargetStar = [SKAction scaleBy:1 + targetStar.size.width / earnedStar.size.width duration:2];
-    SKAction *action = [SKAction group:@[moveTargetStar, enlargeTargetStar]];
+    SKAction *action = [SKAction group:@[moveTargetStar, enlargeTargetStar, self.earnedStarSound]];
     
     [animatedStar runAction:action completion:^{
         SKAction *anAction = [SKAction customActionWithDuration:5 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
