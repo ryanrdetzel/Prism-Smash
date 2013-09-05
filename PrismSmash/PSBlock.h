@@ -15,6 +15,7 @@
 @property (nonatomic, readonly) NSInteger col;
 @property (nonatomic, strong) NSString *colorName;
 @property (nonatomic, readonly, getter=isBeingRemoved) BOOL removing;
+@property (nonatomic, getter = isPossibleMove) BOOL possibleMove;
 @property (nonatomic) float moveDownBy;
 @property (nonatomic, readonly) NSInteger pointsEarned;
 
@@ -24,5 +25,6 @@
 -(void)remove;
 -(BOOL)isAdjacentToBlock:(PSBlock *)block;
 -(BOOL)doesMatchBlock:(PSBlock *)block;
+-(BOOL)doesMatchBlock:(PSBlock *)block1 andBlock:(PSBlock *)block2;
 
 @end

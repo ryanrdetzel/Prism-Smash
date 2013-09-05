@@ -430,8 +430,14 @@
 }
 
 -(void)checkGameStatus{
+    NSInteger possibleMoves = [[self movesPossible] count];
+    NSLog(@"Possible Moves: %d", possibleMoves);
+    
     if (self.movesPerformed >= self.movesAllowed){
         [self gameOverWithReason:@"Your ran out of moves"];
+    }
+    else if (possibleMoves == 0){
+        [self gameOverWithReason:@"There are no possible moves left"];
     }
 }
 
@@ -522,6 +528,231 @@
         [points removeFromParent];
     }];
 }
+
+-(NSArray *)movesPossible{
+    /*
+     Checks the current game state to see what moves are possible by matching known patterns
+     against the block array
+     */
+    
+    if (self.gameIsActive == NO) return @[];
+    
+    //Flatten the current blocks array
+    NSArray *blocksFlattened = [self.blocks sortedArrayUsingSelector:@selector(compare:)];
+    
+    NSMutableArray *blocksInRows = [[NSMutableArray alloc] init];
+    NSMutableArray *possibleMoves = [[NSMutableArray alloc] init];
+    
+    for (PSBlock *block in blocksFlattened){
+        block.possibleMove = NO;
+    }
+    
+    NSRange range;
+    for (NSInteger row = 0;row<kNumberOfRows;row++){
+        range.location = row * kNumberOfCols;
+        range.length = kNumberOfCols;
+        NSArray *fullRow = [blocksFlattened subarrayWithRange:range];
+        [blocksInRows addObject:fullRow];
+    }
+    
+    // Checking only one row
+    // 0 1 2 3
+    // x.xx, xx.x
+    for (NSArray *row in blocksInRows){
+        for (NSInteger r =0;r<kNumberOfCols-3;r++){
+            PSBlock *block0 = [row objectAtIndex:r];
+            PSBlock *block1 = [row objectAtIndex:r + 1];
+            PSBlock *block2 = [row objectAtIndex:r + 2];
+            PSBlock *block3 = [row objectAtIndex:r + 3];
+            
+            if ([block0 doesMatchBlock:block2 andBlock:block3]){
+                block0.possibleMove = YES;
+                [possibleMoves addObject:@[block0, block1]];
+            }
+            if ([block0 doesMatchBlock:block1 andBlock:block3]){
+                block3.possibleMove = YES;
+                [possibleMoves addObject:@[block3, block2]];
+            }
+        }
+    }
+    
+    // Checking two rows at a time
+    for (NSInteger row = 0;row<kNumberOfRows-1;row++){
+        NSArray *row1 = [blocksInRows objectAtIndex:row];
+        NSArray *row2 = [blocksInRows objectAtIndex:row+1];
+        
+        for (NSInteger c=0;c<kNumberOfCols-2;c++){
+            PSBlock *block1 = [row1 objectAtIndex:c];
+            PSBlock *block2 = [row1 objectAtIndex:c + 1];
+            PSBlock *block3 = [row1 objectAtIndex:c + 2];
+            
+            PSBlock *block4 = [row2 objectAtIndex:c];
+            PSBlock *block5 = [row2 objectAtIndex:c + 1];
+            PSBlock *block6 = [row2 objectAtIndex:c + 2];
+            
+            /*
+             
+             456
+             123
+             
+             x   x.x
+             x.x   x
+             
+             */
+            if ([block2 doesMatchBlock:block4 andBlock:block6]){
+                block2.possibleMove = YES;
+                [possibleMoves addObject:@[block2, block5]];
+            }
+            if ([block1 doesMatchBlock:block3 andBlock:block5]){
+                block5.possibleMove = YES;
+                [possibleMoves addObject:@[block5, block2]];
+            }
+            
+            /*
+             
+             x     .xx
+             .xx   x
+             
+             */
+            if ([block1 doesMatchBlock:block5 andBlock:block6]){
+                block1.possibleMove = YES;
+                [possibleMoves addObject:@[block1, block4]];
+            }
+            if ([block2 doesMatchBlock:block3 andBlock:block4]){
+                block4.possibleMove = YES;
+                [possibleMoves addObject:@[block4, block1]];
+            }
+            
+            /*
+             
+             ..x   xx
+             xx    ..x
+             
+             */
+            if ([block3 doesMatchBlock:block4 andBlock:block5]){
+                block3.possibleMove = YES;
+                [possibleMoves addObject:@[block3, block6]];
+            }
+            if ([block1 doesMatchBlock:block2 andBlock:block6]){
+                block6.possibleMove = YES;
+                [possibleMoves addObject:@[block6, block3]];
+            }
+        }
+    }
+    
+    
+    // Checking four rows
+    /*
+     
+     7 8  x x
+     5 6  . x
+     3 4  x .
+     1 2  x x
+     
+     */
+    for (NSInteger row = 0;row<kNumberOfRows-3;row++){
+        NSArray *row1 = [blocksInRows objectAtIndex:row];
+        NSArray *row2 = [blocksInRows objectAtIndex:row+1];
+        NSArray *row3 = [blocksInRows objectAtIndex:row+2];
+        NSArray *row4 = [blocksInRows objectAtIndex:row+3];
+        
+        for (NSInteger c=0;c<kNumberOfCols-1;c++){
+            PSBlock *block1 = [row1 objectAtIndex:c];
+            PSBlock *block2 = [row1 objectAtIndex:c + 1];
+            
+            PSBlock *block3 = [row2 objectAtIndex:c];
+            PSBlock *block4 = [row2 objectAtIndex:c + 1];
+            
+            PSBlock *block5 = [row3 objectAtIndex:c];
+            PSBlock *block6 = [row3 objectAtIndex:c + 1];
+            
+            PSBlock *block7 = [row4 objectAtIndex:c];
+            PSBlock *block8 = [row4 objectAtIndex:c + 1];
+            
+            if ([block7 doesMatchBlock:block3 andBlock:block1]){
+                block7.possibleMove = YES;
+                [possibleMoves addObject:@[block7, block5]];
+            }
+            if ([block6 doesMatchBlock:block8 andBlock:block2]){
+                block2.possibleMove = YES;
+                [possibleMoves addObject:@[block2, block4]];
+            }
+        }
+    }
+    
+    // Checking Three rows at a time
+
+    for (NSInteger row = 0;row<kNumberOfRows-2;row++){
+        NSArray *row1 = [blocksInRows objectAtIndex:row];
+        NSArray *row2 = [blocksInRows objectAtIndex:row+1];
+        NSArray *row3 = [blocksInRows objectAtIndex:row+2];
+        
+        for (NSInteger c=0;c<kNumberOfCols-1;c++){
+            PSBlock *block1 = [row1 objectAtIndex:c];
+            PSBlock *block2 = [row1 objectAtIndex:c + 1];
+            
+            PSBlock *block3 = [row2 objectAtIndex:c];
+            PSBlock *block4 = [row2 objectAtIndex:c + 1];
+            
+            PSBlock *block5 = [row3 objectAtIndex:c];
+            PSBlock *block6 = [row3 objectAtIndex:c + 1];
+            
+            /*
+             
+             5 6 .x   x.
+             3 4 x.   .x
+             1 2 x.   .x
+             
+             */
+            if ([block6 doesMatchBlock:block3 andBlock:block1]){
+                block6.possibleMove = YES;
+                [possibleMoves addObject:@[block6, block5]];
+            }
+            if ([block5 doesMatchBlock:block4 andBlock:block2]){
+                block5.possibleMove = YES;
+                [possibleMoves addObject:@[block5, block6]];
+            }
+            
+            
+            /*
+             
+             5 6 x.   .x
+             3 4 x.   .x
+             1 2 .x   x.
+             
+             */
+            if ([block5 doesMatchBlock:block3 andBlock:block2]){
+                block2.possibleMove = YES;
+                [possibleMoves addObject:@[block2, block1]];
+            }
+            if ([block6 doesMatchBlock:block4 andBlock:block1]){
+                block1.possibleMove = YES;
+                [possibleMoves addObject:@[block1, block2]];
+            }
+            
+            /*
+             
+             5 6 x.   .x
+             3 4 .x   x.
+             1 2 x    .x
+             */
+            
+            if ([block5 doesMatchBlock:block4 andBlock:block1]){
+                block4.possibleMove = YES;
+                [possibleMoves addObject:@[block4, block3]];
+            }
+            if ([block6 doesMatchBlock:block3 andBlock:block2]){
+                block3.possibleMove = YES;
+                [possibleMoves addObject:@[block3, block4]];
+            }
+        }
+    }
+    
+    return possibleMoves;
+}
+
+
+#pragma match Touches
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *aTouch = [touches anyObject];

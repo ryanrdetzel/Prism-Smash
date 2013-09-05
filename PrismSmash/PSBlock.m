@@ -30,6 +30,7 @@
     self.removing = NO;
     self.moveDownBy = 0;
     self.pointsEarned = 50;
+    self.possibleMove = NO;
     
     self.texture = [SKTexture textureWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-block.png", color]]];
     
@@ -59,6 +60,10 @@
         }
     }
     return NO;
+}
+
+-(BOOL)doesMatchBlock:(PSBlock *)block1 andBlock:(PSBlock *)block2{
+    return ([self doesMatchBlock:block1] && [self doesMatchBlock:block2]);
 }
 
 -(BOOL)doesMatchBlock:(PSBlock *)block{

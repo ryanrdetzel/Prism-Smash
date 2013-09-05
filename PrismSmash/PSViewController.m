@@ -135,6 +135,8 @@
 
     SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:1];
     [skView presentScene:self.gameScene transition:doors];
+    self.levelsButton.hidden = NO;
+
     [self showLevelMenu];
 }
 
@@ -144,6 +146,7 @@
     SKTransition *doors = [SKTransition doorsCloseVerticalWithDuration:1];
     [skView presentScene:self.gameOverScene transition:doors];
     self.gameOverScene.reasonLabel.text = reason;
+    self.levelsButton.hidden = YES;
     
     //Refreshes the stats for this level
     [self updateLevelDataWithUserScores:[self.levelData objectAtIndex:self.currentLevel]];
