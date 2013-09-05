@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>name</key>
-	<string>Level Two</string>
+	<string>Level Three</string>
 	<key>levelNumber</key>
-	<string>2</string>
+	<string>3</string>
 	<key>blocks</key>
 	<array>
 		<string>red</string>
@@ -91,12 +91,12 @@
 		<string>yellow</string>
 	</array>
 	<key>movesAllowed</key>
-	<integer>2</integer>
+	<integer>5</integer>
 	<key>targetScore1</key>
-	<string>6000</string>
-	<key>targetScore2</key>
-	<string>7200</string>
-	<key>targetScore3</key>
 	<string>10000</string>
+	<key>targetScore2</key>
+	<string>15000</string>
+	<key>targetScore3</key>
+	<string>25000</string>
 </dict>
 </plist>

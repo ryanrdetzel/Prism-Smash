@@ -158,8 +158,7 @@
     self.targetStar1.alpha = self.targetStar2.alpha = self.targetStar3.alpha = 0;
     
     [self addChild:progressBackground];
-    // The progressbar is 280p wide so to make it at position zero we start -280
-    self.progressBar.position = CGPointMake(-280, self.progressBar.position.y);
+    [self resetProgressBar];
 }
 
 -(void)updateTargetStar1:(float)target1 star2:(float)target2 star3:(float)target3{
@@ -197,7 +196,6 @@
     emitter.targetNode = self;    // Send the particles to the scene.
     [animatedStar addChild:emitter];
     
-    
     UIBezierPath *p = [UIBezierPath bezierPath];
     [p moveToPoint:animatedStar.position];
     [p addCurveToPoint:earnedStar.position
@@ -210,7 +208,7 @@
     
     [animatedStar runAction:action completion:^{
         SKAction *anAction = [SKAction customActionWithDuration:5 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-            emitter.particleBirthRate = 30 -  ((elapsedTime * 10));
+            emitter.particleBirthRate = 40 -  ((elapsedTime * 6));
             if (elapsedTime >= 5){
                 [animatedStar removeFromParent];
             }
@@ -252,6 +250,11 @@
     self.previousTime = currentTime;
 }
 
+-(void)resetProgressBar{
+    // The progressbar is 280p wide so to make it at position zero we start -280
+    self.progressBar.position = CGPointMake(-280, self.progressBar.position.y);
+}
+
 -(void)updateProgressBar:(float)percent{
     if (percent < 0) percent = 0;
     else if (percent > 100) percent = 100;
@@ -280,13 +283,52 @@
     self.scoreLabel.text = @"0";
     self.movesLeftLabel.text = @"0";
     
-
     self.targetStar3.alpha = self.targetStar2.alpha = self.targetStar1.alpha = 0;
     self.earnedStar1.alpha = self.earnedStar2.alpha = self.earnedStar3.alpha = kEarnedStarAlpha;
+    
+    [self resetProgressBar];
+}
+
+-(BOOL)animationsAreOver{
+    //Is the progress bar moving?
+    float positionDiff = self.finalProgressBarXPosition - self.progressBar.position.x;
+    if (positionDiff > 0){
+        return NO;
+    }
+    
+    for (SKNode *node in self.children){
+        if ([node.name isEqualToString:@"points"]){
+            return NO;
+        }else if ([node.name isEqualToString:@"animatedStar"]){
+            if (node.alpha > 0){
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+
+-(void)waitForAnimations:(NSString *)reason{
+    /* If a start is animating, display points are on screen or the progress bar is moving
+        don't show the game over screen yet */
+    
+    SKAction *wait = [SKAction waitForDuration:0.1];
+    [self runAction:wait completion:^{
+        if ([self animationsAreOver]){
+            [self.viewController showGameOverScene:reason];
+            // If the star dust is still animated lets stop that.
+            [self enumerateChildNodesWithName:@"animatedStar" usingBlock:^(SKNode *node, BOOL *stop) {
+                [node removeFromParent];
+            }];
+        }else{
+            [self waitForAnimations:reason];
+        }
+    }];
 }
 
 -(void)showGameOverSceneWithReason:(NSString *)reason{
-    [self.viewController showGameOverScene:reason];
+    /* We want to wait until all of the animates are done before showing the game over scene */
+    [self waitForAnimations:reason];
 }
 
 -(void)loadLevel:(NSDictionary *)levelData{
@@ -296,11 +338,23 @@
     if ([self.gameBoard loadLevel:levelData]){
         
         self.levelLabel.text = [levelData objectForKey:@"name"];
-        //[self updateMovesLeft:[[levelData objectForKey:@"movesAllowed"] integerValue]];
         
         [self updateTargetStar1:[[levelData objectForKey:@"targetScore1"] floatValue]
                           star2:[[levelData objectForKey:@"targetScore2"] floatValue]
                           star3:[[levelData objectForKey:@"targetScore3"] floatValue]];
+        
+        
+        switch ([[levelData objectForKey:@"starsCollected"] integerValue]){
+            case 1:
+                self.earnedStar1.alpha = 1;
+                break;
+            case 2:
+                self.earnedStar1.alpha = self.earnedStar2.alpha = 1;
+                break;
+            case 3:
+                self.earnedStar1.alpha = self.earnedStar2.alpha = self.earnedStar3.alpha = 1;
+                break;
+        }
     }
 }
 
