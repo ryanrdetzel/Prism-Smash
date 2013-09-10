@@ -32,7 +32,7 @@
     self.pointsEarned = 50;
     self.possibleMove = NO;
     
-    self.texture = [SKTexture textureWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-block.png", color]]];
+    self.texture = [SKTexture textureWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-block", color]]];
     
     [self updateRow:row col:col];
     
