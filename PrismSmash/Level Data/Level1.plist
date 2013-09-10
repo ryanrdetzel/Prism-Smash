@@ -90,7 +90,6 @@
 		<string>purple</string>
 		<string>yellow</string>
 	</array>
-	
 	<key>movesAllowed</key>
 	<integer>20</integer>
 	<key>targetScore1</key>
@@ -99,5 +98,11 @@
 	<string>11000</string>
 	<key>targetScore3</key>
 	<string>17500</string>
+	<key>validNewBlocks</key>
+	<array>
+		<string>red</string>
+		<string>blue</string>
+		<string>green</string>
+	</array>
 </dict>
 </plist>

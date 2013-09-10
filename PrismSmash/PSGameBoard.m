@@ -16,6 +16,8 @@
 @property (nonatomic) BOOL gameIsActive;
 
 @property (nonatomic, strong) NSMutableArray *blocks;
+@property (nonatomic, strong) NSMutableArray *blockPool;
+
 @property (nonatomic, strong) PSBlock *selectedBlock;
 @property (nonatomic) BOOL swapAllowed;
 
@@ -30,6 +32,8 @@
 @property (nonatomic) NSInteger targetScore1;
 @property (nonatomic) NSInteger targetScore2;
 @property (nonatomic) NSInteger targetScore3;
+
+@property (nonatomic) NSInteger blockPoolCounter;
 
 @property (nonatomic, strong) SKAction *blockFallSound;
 @property (nonatomic, strong) SKAction *sequence0Sound;
@@ -104,8 +108,19 @@
     self.score = 0;
     self.movesAllowed = 0;
     self.movesPerformed = 0;
+    self.blockPoolCounter = 0;
 }
 
+-(void)createBlockPoolwithLevelData:(NSDictionary *)levelData{
+    NSArray *validNewBlocks = [levelData objectForKey:@"validNewBlocks"];
+    self.blockPool = [[NSMutableArray alloc] init];
+    
+    srand([[levelData objectForKey:@"levelNumber"] integerValue]);
+    
+    for (NSInteger b=0;b<100;b++){
+        [self.blockPool addObject:[validNewBlocks objectAtIndex:rand() % [validNewBlocks count]]];
+    }
+}
 
 -(BOOL)loadLevel:(NSDictionary *)levelData{
     /* Loads the level data into the gameboard */
@@ -129,8 +144,10 @@
         
         NSString *colorName = [blocks objectAtIndex:blockNumber];
         
-        PSBlock *block = [self addBlockWithColor:colorName row:row col:col];
+        [self addBlockWithColor:colorName row:row col:col];
     }
+    [self createBlockPoolwithLevelData:levelData];
+    
     self.gameIsActive = YES;
 
     // In a properly designed level we shouldn't need this check.
@@ -190,8 +207,11 @@
             row++;
         }
         
-        NSArray *colors = @[@"red", @"blue", @"purple", @"yellow", @"orange", @"green"];
-        [self addBlockWithColor:[colors objectAtIndex:arc4random() % [colors count]] row:row col:col];
+        NSString *color = [self.blockPool objectAtIndex:self.blockPoolCounter++];
+        if (self.blockPoolCounter >= [self.blockPool count]){
+            self.blockPoolCounter = 0;
+        }
+        [self addBlockWithColor:color row:row col:col];
     }
 }
 
@@ -219,10 +239,10 @@
     
     if (blocks == nil || [blocks count] == 0) return;
     
-    [self addReplacmentBlocks:blocks];
     
     NSArray *sortedBlocks = [blocks sortedArrayUsingSelector:@selector(compare:)];
-    
+    [self addReplacmentBlocks:sortedBlocks];
+
     for (PSBlock *block in sortedBlocks){
         [self removeBlock:block];
     }
@@ -750,7 +770,6 @@
     
     return possibleMoves;
 }
-
 
 #pragma match Touches
 

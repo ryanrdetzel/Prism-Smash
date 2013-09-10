@@ -98,5 +98,11 @@
 	<string>15000</string>
 	<key>targetScore3</key>
 	<string>25000</string>
+	<key>validNewBlocks</key>
+	<array>
+		<string>red</string>
+		<string>blue</string>
+		<string>green</string>
+	</array>
 </dict>
 </plist>
