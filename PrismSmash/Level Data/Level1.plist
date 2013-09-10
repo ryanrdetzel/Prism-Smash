@@ -5,7 +5,7 @@
 	<key>name</key>
 	<string>Hello World</string>
 	<key>levelNumber</key>
-	<string>1</string>
+	<integer>1</integer>
 	<key>blocks</key>
 	<array>
 		<string>red</string>

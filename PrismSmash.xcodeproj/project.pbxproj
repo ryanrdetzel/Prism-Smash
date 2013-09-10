@@ -56,6 +56,8 @@
 		C5A2FF8717D94F0F004F918C /* default-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF8517D94F0F004F918C /* default-normal.png */; };
 		C5A2FF8817D94F0F004F918C /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF8617D94F0F004F918C /* default.png */; };
 		C5A2FF8A17D9501F004F918C /* blocks.atlas in Resources */ = {isa = PBXBuildFile; fileRef = C5A2FF8917D9501F004F918C /* blocks.atlas */; };
+		C5DAF3B717DF6CFA00E48360 /* Level4.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5DAF3B617DF6CFA00E48360 /* Level4.plist */; };
+		C5DAF3B917DF6F1000E48360 /* Level5.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5DAF3B817DF6F1000E48360 /* Level5.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +130,8 @@
 		C5A2FF8517D94F0F004F918C /* default-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-normal.png"; sourceTree = "<group>"; };
 		C5A2FF8617D94F0F004F918C /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		C5A2FF8917D9501F004F918C /* blocks.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = blocks.atlas; sourceTree = "<group>"; };
+		C5DAF3B617DF6CFA00E48360 /* Level4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Level4.plist; path = "Level Data/Level4.plist"; sourceTree = "<group>"; };
+		C5DAF3B817DF6F1000E48360 /* Level5.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Level5.plist; path = "Level Data/Level5.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +200,8 @@
 				C53E003C17CE0B2300D6F119 /* Level1.plist */,
 				C53E004C17CF5F8D00D6F119 /* Level2.plist */,
 				C5A2FF6617D8C3B5004F918C /* Level3.plist */,
+				C5DAF3B617DF6CFA00E48360 /* Level4.plist */,
+				C5DAF3B817DF6F1000E48360 /* Level5.plist */,
 			);
 			name = "Level Data";
 			sourceTree = "<group>";
@@ -398,6 +404,7 @@
 				C53E004917CEC56600D6F119 /* progress-bar-middle.png in Resources */,
 				C53EFFC517CD438900D6F119 /* InfoPlist.strings in Resources */,
 				C5A2FF8017D94DEF004F918C /* icon120.png in Resources */,
+				C5DAF3B917DF6F1000E48360 /* Level5.plist in Resources */,
 				C5A2FF8A17D9501F004F918C /* blocks.atlas in Resources */,
 				C5A2FF7917D8CCC0004F918C /* sequence5.caf in Resources */,
 				C5A2FF7A17D8CCC0004F918C /* earnStar.caf in Resources */,
@@ -411,6 +418,7 @@
 				C5A2FF8717D94F0F004F918C /* default-normal.png in Resources */,
 				C5A2FF6717D8C3B5004F918C /* Level3.plist in Resources */,
 				C5A2FF7217D8CCC0004F918C /* blockFall.caf in Resources */,
+				C5DAF3B717DF6CFA00E48360 /* Level4.plist in Resources */,
 				C5A2FF7617D8CCC0004F918C /* sequence2.caf in Resources */,
 				C5A2FF7717D8CCC0004F918C /* sequence3.caf in Resources */,
 				C53E004D17CF5F8D00D6F119 /* Level2.plist in Resources */,

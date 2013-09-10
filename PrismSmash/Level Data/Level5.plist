@@ -2,107 +2,110 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>name</key>
-	<string>Primer</string>
-	<key>levelNumber</key>
-	<integer>2</integer>
 	<key>blocks</key>
 	<array>
-		<string>red</string>
 		<string>blue</string>
-		<string>yellow</string>
+		<string>orange</string>
+		<string>red</string>
+		<string>orange</string>
+		<string>orange</string>
 		<string>green</string>
-		<string>purple</string>
-		<string>yellow</string>
+		<string>red</string>
+		<string>orange</string>
 		<string>red</string>
 		<string>green</string>
-		<string>pink</string>
+		<string>green</string>
+		<string>yellow</string>
+		<string>green</string>
+		<string>yellow</string>
+		<string>orange</string>
 		<string>blue</string>
-		<string>purple</string>
-		<string>red</string>
 		<string>blue</string>
-		<string>yellow</string>
-		<string>green</string>
-		<string>purple</string>
-		<string>yellow</string>
-		<string>red</string>
-		<string>green</string>
-		<string>pink</string>
 		<string>blue</string>
-		<string>purple</string>
-		<string>red</string>
-		<string>yellow</string>
-		<string>yellow</string>
-		<string>green</string>
-		<string>purple</string>
-		<string>yellow</string>
-		<string>red</string>
-		<string>green</string>
-		<string>pink</string>
 		<string>blue</string>
-		<string>purple</string>
-		<string>red</string>
 		<string>blue</string>
 		<string>green</string>
-		<string>green</string>
-		<string>purple</string>
-		<string>yellow</string>
 		<string>red</string>
-		<string>green</string>
-		<string>green</string>
-		<string>blue</string>
-		<string>purple</string>
-		<string>red</string>
-		<string>blue</string>
-		<string>yellow</string>
-		<string>green</string>
-		<string>purple</string>
-		<string>yellow</string>
-		<string>red</string>
-		<string>green</string>
-		<string>pink</string>
-		<string>blue</string>
-		<string>purple</string>
-		<string>red</string>
-		<string>blue</string>
-		<string>yellow</string>
-		<string>green</string>
-		<string>purple</string>
-		<string>yellow</string>
-		<string>red</string>
-		<string>green</string>
-		<string>pink</string>
-		<string>blue</string>
-		<string>purple</string>
-		<string>red</string>
-		<string>blue</string>
-		<string>yellow</string>
-		<string>green</string>
-		<string>purple</string>
-		<string>yellow</string>
 		<string>red</string>
 		<string>red</string>
 		<string>blue</string>
 		<string>blue</string>
-		<string>purple</string>
-		<string>purple</string>
+		<string>yellow</string>
+		<string>blue</string>
+		<string>blue</string>
+		<string>blue</string>
+		<string>green</string>
+		<string>red</string>
+		<string>green</string>
+		<string>yellow</string>
+		<string>orange</string>
+		<string>yellow</string>
+		<string>green</string>
+		<string>blue</string>
+		<string>yellow</string>
+		<string>red</string>
+		<string>red</string>
+		<string>green</string>
+		<string>yellow</string>
+		<string>red</string>
+		<string>orange</string>
+		<string>green</string>
+		<string>orange</string>
+		<string>blue</string>
+		<string>red</string>
+		<string>orange</string>
 		<string>yellow</string>
 		<string>red</string>
 		<string>blue</string>
+		<string>red</string>
+		<string>green</string>
+		<string>red</string>
+		<string>orange</string>
+		<string>yellow</string>
+		<string>orange</string>
+		<string>yellow</string>
+		<string>blue</string>
+		<string>green</string>
+		<string>green</string>
+		<string>red</string>
+		<string>green</string>
+		<string>blue</string>
+		<string>orange</string>
+		<string>green</string>
+		<string>orange</string>
+		<string>red</string>
+		<string>blue</string>
+		<string>green</string>
+		<string>blue</string>
+		<string>yellow</string>
+		<string>blue</string>
+		<string>green</string>
+		<string>red</string>
+		<string>red</string>
+		<string>red</string>
+		<string>green</string>
+		<string>yellow</string>
 	</array>
+	<key>levelNumber</key>
+	<integer>5</integer>
 	<key>movesAllowed</key>
-	<integer>20</integer>
+	<integer>25</integer>
+	<key>name</key>
+	<string>Sea of Blue</string>
 	<key>targetScore1</key>
-	<string>10000</string>
+	<real>40000</real>
 	<key>targetScore2</key>
-	<string>13000</string>
+	<real>80000</real>
 	<key>targetScore3</key>
-	<string>20000</string>
+	<real>120000</real>
 	<key>validNewBlocks</key>
 	<array>
-		<string>red</string>
 		<string>blue</string>
 		<string>green</string>
+		<string>orange</string>
+		<string>yellow</string>
+		<string>blue</string>
+		<string>blue</string>
 	</array>
 </dict>
 </plist>

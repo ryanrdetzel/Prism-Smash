@@ -771,6 +771,44 @@
     return possibleMoves;
 }
 
+
+#pragma  match Generate Levels
+
+-(void)generateLevel:(NSInteger)levelNumber withColors:(NSArray *)colors{
+    /* Generates a basic level with certain colors. Sets name to Level x and sets the scores to a 
+       set number. Prints the level to console. Copy and paste to create a new level file.
+     
+     [self generateLevel:4 withColors:@[@"blue", @"green", @"orange",@"red", @"yellow"]];
+
+    */
+    
+    NSString *name = [NSString stringWithFormat:@"Level %d", levelNumber];
+
+    NSMutableDictionary *level = [NSMutableDictionary dictionaryWithDictionary:@{@"name": name,
+                                                                                 @"levelNumber": [NSNumber numberWithInt:levelNumber],
+                                                                                 @"movesAllowed": @25,
+                                                                                 @"targetScore1": @15000,
+                                                                                 @"targetScore2": @20000,
+                                                                                 @"targetScore3": @25000,
+                                                                                 }];
+
+    NSMutableArray *blocks = [NSMutableArray arrayWithArray:@[]];
+    for (int r=0;r<kNumberOfRows;r++){
+        for (int c=0;c<kNumberOfCols;c++){
+            [blocks addObject:[colors objectAtIndex:arc4random() % [colors count]]];
+        }
+    }
+
+    [level setObject:blocks forKey:@"blocks"];
+    [level setObject:colors forKey:@"validNewBlocks"];
+    
+    NSData *levelData = [NSPropertyListSerialization dataWithPropertyList:level
+                                                                                        format:NSPropertyListXMLFormat_v1_0
+                                                                                       options:0
+                                                                                         error:nil];
+    NSLog(@"%@", [[NSString alloc] initWithData:levelData encoding:NSUTF8StringEncoding]);
+}
+
 #pragma match Touches
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

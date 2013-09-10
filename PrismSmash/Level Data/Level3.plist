@@ -5,7 +5,7 @@
 	<key>name</key>
 	<string>Dude Ranch</string>
 	<key>levelNumber</key>
-	<string>3</string>
+	<integer>3</integer>
 	<key>blocks</key>
 	<array>
 		<string>red</string>
