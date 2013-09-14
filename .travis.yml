@@ -1,0 +1,4 @@
+language: objective-c
+script: 
+  - xctool -project PrismSmash.xcodeproj -scheme 'PrismSmash' -configuration Release -sdk iphonesimulator test
+  - xctool -project PrismSmash.xcodeproj -scheme 'PrismSmash' -configuration Release -sdk iphonesimulator
