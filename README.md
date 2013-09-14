@@ -1,5 +1,6 @@
 Prism-Smash
 ===========
+[![Build Status](https://travis-ci.org/ryanrdetzel/Prism-Smash.png?branch=master)](https://travis-ci.org/ryanrdetzel/Prism-Smash)
 
 iOS (iPhone) game similar to Bejeweled and Candy Crush
 
